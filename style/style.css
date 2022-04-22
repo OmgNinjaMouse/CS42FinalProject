@@ -1,13 +1,13 @@
 @font-face {
-    font-family: titles;
-    src: url('../fonts/BigelowRules-Regular.ttf');
+    font-family: combat;
+    src: url('../fonts/BlackOpsOne-Regular.ttf');
     font-weight:400;
     font-weight:normal;
   }
   
   @font-face {
-    font-family: prompts;
-    src: url('../fonts/GideonRoman-Regular.ttf');
+    font-family: pinball;
+    src: url('../fonts/Neonderthaw-Regular.ttf');
     font-weight:400;
     font-weight:normal;
   }

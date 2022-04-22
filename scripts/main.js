@@ -41,3 +41,7 @@ class Game {
     this.phaser.model = this.model;
   }  
 }
+
+function getModel() {
+  return game_obj.model;
+}
