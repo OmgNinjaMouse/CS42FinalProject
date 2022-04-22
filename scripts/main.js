@@ -14,8 +14,15 @@ const init_model = {
     },
     scene: [
       SceneTitle,
+      SceneOptions,
     ],
     parent: "dom_id"    
+  },
+  options: {
+    bgm_volume: 0.5,
+    bgm_enable: true,
+    sfx_volume: 0.5,
+    sfx_enable: true
   }
 }
 
