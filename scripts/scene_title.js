@@ -3,6 +3,7 @@ class SceneTitle extends BasicScene {
   constructor() {
     super("SceneTitle");
     this.doOptions = this.doOptions.bind(this);
+    this.startGame = this.startGame.bind(this);
   }
 
   init () {
@@ -15,7 +16,7 @@ class SceneTitle extends BasicScene {
     let bx = getModel().config.width / 2;
     let by = getModel().config.height * 0.55;
     let btn_space = 85;
-    this.addObject("play_btn", new MenuButton(this, bx, by, "Play"));
+    this.addObject("play_btn", new MenuButton(this, bx, by, "Play", this.startGame));
     this.addObject("options_btn", new MenuButton(this, bx, by+(btn_space), "Options", this.doOptions));
     this.addObject("credits_btn", new MenuButton(this, bx, by+(btn_space*2), "About"));
   }
@@ -30,6 +31,10 @@ class SceneTitle extends BasicScene {
 
   update () {
     super.update();
+  }
+
+  startGame () {
+    this.scene.start("SceneSelect");
   }
 
   doOptions () {

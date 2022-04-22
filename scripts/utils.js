@@ -8,6 +8,7 @@ class BasicObject {
     this.update = this.update.bind(this);
     this.addObject = this.addObject.bind(this);
     this.getScene = this.getScene.bind(this);
+    this.allObjects = this.allObjects.bind(this);
     this.objects = {};
   }
 
@@ -23,6 +24,10 @@ class BasicObject {
   getScene () {
     return this.scene;
   }
+
+  allObjects () {
+    return Object.keys(this.objects).map( (key) => this.objects[key]);
+  }
 }
 
 
@@ -35,6 +40,7 @@ class BasicScene extends Phaser.Scene {
     this.create = this.create.bind(this);
     this.update = this.update.bind(this);
     this.addObject = this.addObject.bind(this);
+    this.allObjects = this.allObjects.bind(this);
     this.objects = {};
   }
 
@@ -49,5 +55,9 @@ class BasicScene extends Phaser.Scene {
 
   getScene () {
     return this;
+  }
+
+  allObjects () {
+    return Object.keys(this.objects).map( (key) => this.objects[key]);
   }
 }
