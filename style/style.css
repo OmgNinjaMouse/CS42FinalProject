@@ -31,6 +31,7 @@
     height: 75vw;
     margin-left: auto;
     margin-right: auto;
+    border: 1px solid blue;
   }
   
   @media (min-aspect-ratio: 4/3) {
