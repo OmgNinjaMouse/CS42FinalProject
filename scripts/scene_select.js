@@ -143,7 +143,7 @@ class SelectGallery extends BasicObject {
 
 const SelectStates = {
   PLAYER_ONE_WAITING: 0,
-  PLAYER_TWO_WAITING: 1
+  PLAYER_TWO_WAITING: 1,
   DISPLAY: 2
 }
 
