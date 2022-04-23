@@ -22,11 +22,18 @@ class SelectPortrait extends BasicObject {
     this.redraw = this.redraw.bind(this);
     this.fsm = this.fsm.bind(this);
     this.setLockedCb = this.setLockedCb.bind(this);
+    this.disableMouse = this.disableMouse.bind(this);
+    this.select = this.select.bind(this);
+    this.unselect = this.unselect.bind(this);
 
     this.id = id;
     this.x = x;
     this.y = y;
+  }
+
+  init () {
     this.state = PortraitStates.IDLE;
+    this.mouse_events = true;
   }
 
   preload () {
@@ -40,21 +47,31 @@ class SelectPortrait extends BasicObject {
     this.obj.setInteractive();
 
     this.obj.on("pointerover", () => {
-      this.fsm(PortraitEvents.ENTER);
+      if (this.mouse_events) {
+        this.fsm(PortraitEvents.ENTER);
+      }
     });
 
     this.obj.on("pointerout", () => {
-      this.fsm(PortraitEvents.EXIT);
+      if (this.mouse_events) {
+        this.fsm(PortraitEvents.EXIT);
+      }
     });
 
     this.obj.on("pointerup", () => {
-      this.fsm(PortraitEvents.CLICKED);
+      if (this.mouse_events) {
+        this.fsm(PortraitEvents.CLICKED);
+      }
     });
   }
 
   create () {
     super.create();
     this.redraw();
+  }
+
+  disableMouse () {
+    this.mouse_events = false;
   }
 
   fsm (event) {
@@ -85,8 +102,21 @@ class SelectPortrait extends BasicObject {
 
 
     if (old_state != this.state) {
+      console.log("char" + this.id + " state " + this.state);
       this.state_changed_at = Date.now();
     }
+  }
+
+  unselect () {
+    this.fsm(PortraitEvents.EXIT);
+  }
+
+  select () {
+    this.fsm(PortraitEvents.ENTER);
+  }
+
+  lock () {
+    this.fsm(PortraitEvents.CLICKED);
   }
 
   update () {
@@ -134,10 +164,57 @@ class SelectGallery extends BasicObject {
     }
   }
 
+  init () {
+    super.init();
+    this.randomize = false;
+  }
+
   setLockedCb (callback) {
     this.allObjects().forEach( (obj) => {
-      obj.setLockedCb(callback);
+      obj.setLockedCb((id) => {
+        obj.disableMouse();
+        callback(id)
+      });
     })
+  }
+
+  selectRandom () {
+    this.randomize = true;
+    this.last_randomize = Date.now();
+    this.randomize_selection = 0;
+    this.randomize_delay = 10;
+    this.randomize_possibles = 
+      this.allObjects()
+        .map( (obj) => { return { id: obj.id, state: obj.state }})
+        .filter( (obj_data) => { return obj_data.state != PortraitStates.LOCKED })
+        .filter( (obj_data) => { return obj_data.state != PortraitStates.DEFEATED })
+        .map( (obj_data) => obj_data.id );
+      console.log(this.randomize_possibles);
+
+      }
+
+  update () {
+    super.update();
+
+    if (this.randomize) {
+      let now = Date.now();
+      if (now > (this.last_randomize + this.randomize_delay)) {
+
+        if (this.randomize_delay < 1000)  {
+          this.last_randomize = now;
+          this.randomize_delay = this.randomize_delay * 1.5;
+          this.objects["char_" + this.randomize_selection].unselect();
+          this.randomize_selection = this.randomize_possibles[Math.floor(Math.random() * this.randomize_possibles.length)];
+
+          console.log("Picking " + this.randomize_selection);
+          this.objects["char_" + this.randomize_selection].select();
+        } else {
+          console.log("Locking " + this.randomize_selection);
+          this.objects["char_" + this.randomize_selection].lock();
+          this.randomize = false;
+        }
+      }
+    }
   }
 }
 
@@ -156,12 +233,16 @@ const SelectEvents = {
 class SceneSelect extends BasicScene {
   constructor () {
     super("SceneSelect");
+    this.choiceMade = this.choiceMade.bind(this);
+    this.fsm = this.fsm.bind(this);
+
     this.addObject("gallery", new SelectGallery(this));
   }
 
   init () {
     super.init();
-    this.state = SelectStates.PLAYER_ONE_CHOOSE;
+    this.state = SelectStates.PLAYER_ONE_WAITING;
+    this.state_changed_at = Date.now();
   }
 
   preload () {
@@ -177,12 +258,14 @@ class SceneSelect extends BasicScene {
   }
 
   fsm (event, character_id) {
+    let old_state = this.state;
     switch (this.state) {
       case SelectStates.PLAYER_ONE_WAITING:
         switch (event) {
           case SelectEvents.SELECTION_MADE:
             console.log("Player One has chosen: " + character_id);
             this.state = SelectStates.PLAYER_TWO_WAITING;
+            this.objects.gallery.selectRandom();
             break;
         }
         break;
@@ -198,14 +281,30 @@ class SceneSelect extends BasicScene {
         switch (event) {
           case SelectEvents.DISPLAY_DONE:
             //this.scene.start("SceneGame");
+            console.log("Start Game!@!!");
             break;
         }
         break;
       
     }
+
+    if (old_state != this.state) {
+      console.log("scene state " + this.state);
+      this.state_changed_at = Date.now();
+    }
   }
 
   choiceMade (character_id) {
     this.fsm(SelectEvents.SELECTION_MADE, character_id);
+  }
+
+  update () {
+    super.update();
+    let now = Date.now();
+    if (this.state == SelectStates.DISPLAY) {
+      if (now > (this.state_changed_at + 5000)) {
+        this.fsm(SelectEvents.DISPLAY_DONE);
+      }
+    }
   }
 }
