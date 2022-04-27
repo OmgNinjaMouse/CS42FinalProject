@@ -34,8 +34,8 @@ class SceneTitle extends BasicScene {
   }
 
   startGame () {
-    //this.scene.start("SceneSelect");
-    this.scene.start("SceneGame");
+    this.scene.start("SceneSelect");
+    //this.scene.start("SceneGame");
   }
 
   doOptions () {
