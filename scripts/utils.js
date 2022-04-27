@@ -12,13 +12,14 @@ class BasicObject {
     this.objects = {};
   }
 
-  init ()    { Object.keys(this.objects).forEach((key) => this.objects[key].init()); }
-  preload () { Object.keys(this.objects).forEach((key) => this.objects[key].preload()); }
-  create ()  { Object.keys(this.objects).forEach((key) => this.objects[key].create()); }
-  update ()  { Object.keys(this.objects).forEach((key) => this.objects[key].update()); }
+  init ()    { Object.keys(this.objects).forEach((key) => this.objects[key].init());    return this; }
+  preload () { Object.keys(this.objects).forEach((key) => this.objects[key].preload()); return this; }
+  create ()  { Object.keys(this.objects).forEach((key) => this.objects[key].create());  return this; }
+  update ()  { Object.keys(this.objects).forEach((key) => this.objects[key].update());  return this; }
 
   addObject (key, basic_object) {
     this.objects[key] = basic_object;
+    return basic_object;
   }
 
   getScene () {
@@ -46,12 +47,13 @@ class BasicScene extends Phaser.Scene {
 
   addObject (key, basic_object) {
     this.objects[key] = basic_object;
+    return basic_object;
   }
 
-  init ()    { Object.keys(this.objects).forEach((key) => this.objects[key].init()); }
-  preload () { Object.keys(this.objects).forEach((key) => this.objects[key].preload()); }
-  create ()  { Object.keys(this.objects).forEach((key) => this.objects[key].create()); }
-  update ()  { Object.keys(this.objects).forEach((key) => this.objects[key].update()); }
+  init ()    { Object.keys(this.objects).forEach((key) => this.objects[key].init());    return this;}
+  preload () { Object.keys(this.objects).forEach((key) => this.objects[key].preload()); return this;}
+  create ()  { Object.keys(this.objects).forEach((key) => this.objects[key].create());  return this;}
+  update ()  { Object.keys(this.objects).forEach((key) => this.objects[key].update());  return this;}
 
   getScene () {
     return this;

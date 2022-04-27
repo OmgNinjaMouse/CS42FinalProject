@@ -17,6 +17,7 @@ const init_model = {
       SceneOptions,
       SceneSelect,
       SceneDialog,
+      SceneGame
     ],
     parent: "dom_id"    
   },

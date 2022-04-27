@@ -158,6 +158,7 @@ class SceneDialog extends BasicScene {
         break;
       case DialogStates.Player_TWO_TALKING:
         console.log("Talking all done!");
+        this.scene.start("SceneGame");
         break;
     }
   }
