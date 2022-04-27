@@ -280,8 +280,9 @@ class SceneSelect extends BasicScene {
       case SelectStates.DISPLAY:
         switch (event) {
           case SelectEvents.DISPLAY_DONE:
-            //this.scene.start("SceneGame");
             console.log("Start Game!@!!");
+            this.scene.start("SceneDialog");
+
             break;
         }
         break;
