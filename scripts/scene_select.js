@@ -156,7 +156,7 @@ class SelectGallery extends BasicObject {
       let col = i % this.chars_per_row;
       let row = Math.floor(i / this.chars_per_row);
       let center_x = getModel().config.width / 2;
-      let start_y = getModel().config.height * 0.6;
+      let start_y = getModel().config.height * 0.75;
       let x = center_x + (this.sprite_width * (col - 2));
       let y = start_y + (this.sprite_width * row);
 
@@ -303,7 +303,7 @@ class SceneSelect extends BasicScene {
     super.update();
     let now = Date.now();
     if (this.state == SelectStates.DISPLAY) {
-      if (now > (this.state_changed_at + 5000)) {
+      if (now > (this.state_changed_at + 2000)) {
         this.fsm(SelectEvents.DISPLAY_DONE);
       }
     }
