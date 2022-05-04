@@ -76,6 +76,8 @@ class SceneOptions extends BasicScene {
     this.doMenu = this.doMenu.bind(this);
     this.updateBgm = this.updateBgm.bind(this);
     this.updateSfx = this.updateSfx.bind(this);
+
+    this.addObject("bgm", new BgmAgent(this));
   }
 
   init () {
@@ -85,7 +87,6 @@ class SceneOptions extends BasicScene {
     let y = getModel().config.height * 0.2;
     this.addObject("main_title", new MainTitle(this, x, y, "COMBAT"));
     this.addObject("sub_title", new SubTitle(this, x, y+40, "Options "));
-
 
     let bx = getModel().config.width / 2;
     let by = getModel().config.height * 0.50;
@@ -110,7 +111,11 @@ class SceneOptions extends BasicScene {
   preload () {
     super.preload();
     this.load.plugin('rexsliderplugin', 'resources/rexsliderplugin.min.js', true);
+  }
 
+  create () {
+    super.create();
+    this.objects.bgm.play('menu_bgm');
   }
 
   doMenu () {

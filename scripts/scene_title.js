@@ -11,6 +11,7 @@ class SceneTitle extends BasicScene {
     let y = getModel().config.height * 0.2;
     this.addObject("main_title", new MainTitle(this, x, y, "COMBAT"));
     this.addObject("sub_title", new SubTitle(this, x, y+40, "Pinball "));
+    this.addObject("bgm", new BgmAgent(this));
 
 
     let bx = getModel().config.width / 2;
@@ -27,6 +28,7 @@ class SceneTitle extends BasicScene {
 
   create () {
     super.create();
+    this.objects.bgm.play('menu_bgm');
   }
 
   update () {

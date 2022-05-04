@@ -363,6 +363,7 @@ class SceneGame extends BasicScene {
     this.addObject("bumper_i", new Bumper(this, 590, 500));
 
 
+    this.addObject("bgm", new BgmAgent(this));
   }
   
   preload () {
@@ -371,6 +372,10 @@ class SceneGame extends BasicScene {
 
   create () {
     super.create();
+
+    let bgm_name = "battle_" + Math.floor(Math.random() * 4);
+    this.objects.bgm.play(bgm_name);
+
     this.matter.world.setBounds(0,0,960, 540*2, 64, true, true, true, false);
 
     [ this.matter.world.walls.left,

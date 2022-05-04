@@ -120,7 +120,7 @@ class SceneDialog extends BasicScene {
 
     this.addObject("left", new DialogCharLeft(this));
     this.addObject("right", new DialogCharRight(this));
-
+    this.addObject("bgm", new BgmAgent(this));
   }
 
   init () {
@@ -136,6 +136,7 @@ class SceneDialog extends BasicScene {
 
   create () {
     super.create();
+    this.objects.bgm.play('menu_bgm');
   }
 
   fsm (event) {

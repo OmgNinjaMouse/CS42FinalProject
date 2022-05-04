@@ -237,6 +237,7 @@ class SceneSelect extends BasicScene {
     this.fsm = this.fsm.bind(this);
 
     this.addObject("gallery", new SelectGallery(this));
+    this.addObject("bgm",       new BgmAgent(this));
   }
 
   init () {
@@ -255,6 +256,7 @@ class SceneSelect extends BasicScene {
   create () {
     super.create();
     this.objects.gallery.setLockedCb(this.choiceMade);
+    this.objects.bgm.play('menu_bgm');
   }
 
   fsm (event, character_id) {

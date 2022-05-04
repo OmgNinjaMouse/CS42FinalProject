@@ -32,12 +32,14 @@ class SceneContinue extends BasicScene {
     constructor () {
         super("SceneContinue");
         this.addObject("pic", new ContinuePic(this, 128, 128));
-        this.addObjecct("clock", new ContinueClock(this));
+        this.addObject("clock", new ContinueClock(this));
+        this.addObject("bgm", new BgmAgent(this));
     }
 
     create () {
         super.create();
-
+        this.objects.bgm.play('continue');
+        
         /* Spacebar to continue */
         /* Any other key to hurry the count */
     }

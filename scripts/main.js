@@ -35,6 +35,8 @@ class Model {
       let [k,v] = e;
       this[k] = v;
     });
+
+    this.bgm = new BgmManager();
   }
 
   setDomId (dom_id) {
