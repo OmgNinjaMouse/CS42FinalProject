@@ -102,6 +102,10 @@ class Ball extends BasicObject {
     this.ball.setVelocity(0,0);
   }
 
+  getPosition () {
+    return {x: this.ball.x, y: this.ball.y };
+  }
+
   create () {
     super.create();
 
@@ -422,6 +426,15 @@ class SceneGame extends BasicScene {
           break;
       }
     });
+  }
 
+  update () {
+    super.update();
+    let pos = this.objects.ball.getPosition();
+    if (pos.y > 540*2) {
+      console.log("Ball has left play!");
+      this.scene.start("SceneContinue");
+
+    }
   }
 }
