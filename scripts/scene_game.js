@@ -237,7 +237,7 @@ class WireRail extends BasicObject {
     this.midpt = { x: (x1+x2) / 2, y: (y1+y2) / 2 };
     this.angle_rad = Math.atan2( y2-y1, x2-x1 );
     this.length = Math.sqrt( Math.pow(x2-x1, 2) + Math.pow(y2-y1, 2));
-    this.thickness = 10;
+    this.thickness = 20;
   }
 
   create () {
@@ -347,11 +347,11 @@ class SceneGame extends BasicScene {
     super(config);
 
     //this.addObject("bgm", new BgmSampled(this));
-    this.addObject("field", new ParticleField(this));
+    //this.addObject("field", new ParticleField(this));
     //this.addObject("block", new Block(this));
     this.addObject("ball", new Ball(this));
-    this.addObject("left_flip", new Flipper(this, 400, 990, false));
-    this.addObject("right_flip", new Flipper(this, 620, 990, true));
+    this.addObject("left_flip", new Flipper(this, 420, 970, false));
+    this.addObject("right_flip", new Flipper(this, 600, 970, true));
     this.addObject("left_wire", new WireRail(this, 0, 900, 400, 960));
     this.addObject("right_wire", new WireRail(this, 620, 960, 960, 900));
     this.addObject("bumper_a", new Bumper(this, 490, 400));
