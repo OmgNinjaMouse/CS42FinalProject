@@ -43,6 +43,8 @@ class BasicScene extends Phaser.Scene {
     this.addObject = this.addObject.bind(this);
     this.allObjects = this.allObjects.bind(this);
     this.objects = {};
+    this.last_time = 0;
+    this.delta_ms = 0;
   }
 
   addObject (key, basic_object) {
@@ -53,7 +55,14 @@ class BasicScene extends Phaser.Scene {
   init ()    { Object.keys(this.objects).forEach((key) => this.objects[key].init());    return this;}
   preload () { Object.keys(this.objects).forEach((key) => this.objects[key].preload()); return this;}
   create ()  { Object.keys(this.objects).forEach((key) => this.objects[key].create());  return this;}
-  update ()  { Object.keys(this.objects).forEach((key) => this.objects[key].update());  return this;}
+  update ()  { 
+    let now = Date.now();
+    this.delta_ms = now - this.last_time;
+    this.last_time = now;
+    
+    Object.keys(this.objects).forEach((key) => this.objects[key].update());  
+    return this;
+  }
 
   getScene () {
     return this;

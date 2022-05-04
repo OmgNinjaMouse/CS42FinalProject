@@ -5,6 +5,20 @@ class ContinueClock extends BasicObject {
         this.x = x;
         this.y = y;
     }
+
+    create () {
+        super.create();
+        this.text = this.scene.add.text(this.x, this.y, "");
+    }
+
+    refresh (time_remaining_ms) {
+        this.time = time_remaining_ms;
+    }
+
+    update () {
+        super.update();
+        this.text.setText(Math.ceil(this.time/1000));
+    }
 }
 
 class ContinuePic extends BasicObject {
@@ -36,16 +50,40 @@ class SceneContinue extends BasicScene {
         this.addObject("bgm", new BgmAgent(this));
     }
 
+    init () {
+        this.countdown = 10000;
+    }
+
     create () {
         super.create();
         this.objects.bgm.play('continue');
-        
+
         /* Spacebar to continue */
         /* Any other key to hurry the count */
+        this.input.keyboard.on('keydown', (event) => {
+            switch (event.code) {
+                case "Space":
+                    this.scene.start("SceneGame");
+                    break;
+                default:
+                    this.countdown -= 1000;
+                    break;
+            }
+        });
     }
 
     update () {
         super.update();
+
+        console.log(this.countdown);
+        if (this.delta_ms < 1000) {
+            this.countdown -= this.delta_ms;
+        }
+        this.objects.clock.refresh(this.countdown);
+
+        if (this.countdown < 0) {
+            this.scene.start("SceneTitle");
+        }
 
     }
 }
