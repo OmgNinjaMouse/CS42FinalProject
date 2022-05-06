@@ -29,6 +29,17 @@ class SceneTitle extends BasicScene {
   create () {
     super.create();
     this.objects.bgm.play('menu_bgm');
+
+    this.input.keyboard.on('keydown', (event) => {
+      switch (event.code) {
+          case "Backslash":
+              this.scene.start("SceneGame");
+              break;
+          default:
+              console.log(event.code);
+              break;
+      }
+  });
   }
 
   update () {
@@ -36,8 +47,8 @@ class SceneTitle extends BasicScene {
   }
 
   startGame () {
-    //this.scene.start("SceneSelect");
-    this.scene.start("SceneGame");
+    this.scene.start("SceneSelect");
+    //this.scene.start("SceneGame");
   }
 
   doOptions () {

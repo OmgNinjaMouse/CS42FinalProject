@@ -127,6 +127,7 @@ class SceneGame extends BasicScene {
     this.objects.bgm.play(bgm_name);
 
     this.matter.world.setBounds(0,0,960, 540*2, 64, true, true, true, false);
+    this.matter.world.engine.positionIterations=20;
 
     [ this.matter.world.walls.left,
       this.matter.world.walls.right,
@@ -155,6 +156,10 @@ class SceneGame extends BasicScene {
         case "Space":
           //this.objects["ball"].reset();
           this.objects["launch"].pull();
+          break;
+
+        case "Backslash":
+          this.objects["ball"].reset();
           break;
 
         default:
