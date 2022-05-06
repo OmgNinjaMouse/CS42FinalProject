@@ -73,8 +73,8 @@ class Launcher extends BasicObject {
       if (this.event == this.Events.PULLING) {
         this.tween = this.scene.tweens.add({
           targets: [this.handle],
-          y: this.y+(this.width*4),
-          duration: 3000
+          y: this.y+(this.width*2),
+          duration: 1000
         });
   
         this.state = this.fsmPulling;

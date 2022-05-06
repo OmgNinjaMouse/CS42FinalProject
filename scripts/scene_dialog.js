@@ -166,6 +166,16 @@ class SceneDialog extends BasicScene {
 
   update () {
     super.update();
+
+    
+    this.input.keyboard.on('keyup', (event) => {
+      switch (event.code) {
+        case "Space":
+          this.scene.start("SceneGame");
+          break;
+      }
+    });
+
     if (this.state == DialogStates.LOADING) {
       let now = Date.now();
       if (now > this.start_time + 1000) {

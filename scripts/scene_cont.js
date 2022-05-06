@@ -28,6 +28,10 @@ class ContinuePic extends BasicObject {
         this.y = y;
     }
 
+    preload () {
+        this.scene.load.plugin('rexroundrectangleplugin', 'resources/rexroundrectangleplugin.min.js', true);   
+    }
+
     create () {
         super.create();
         this.rect = this.scene.add.rexRoundRectangle(0,0,128,128,12, 0x00ff00, 1);
@@ -52,6 +56,7 @@ class SceneContinue extends BasicScene {
 
     init () {
         this.countdown = 10000;
+        this.pressed = false; 
     }
 
     create () {
@@ -66,16 +71,23 @@ class SceneContinue extends BasicScene {
                     this.scene.start("SceneGame");
                     break;
                 default:
-                    this.countdown -= 1000;
+                    if (this.pressed == false) {
+                        this.countdown -= 1000;
+                        this.pressed = true;
+                    }
                     break;
             }
+        });
+
+        this.input.keyboard.on("keyup", (event) => {
+            this.pressed = false; 
         });
     }
 
     update () {
         super.update();
 
-        console.log(this.countdown);
+        //console.log(this.countdown);
         if (this.delta_ms < 1000) {
             this.countdown -= this.delta_ms;
         }
