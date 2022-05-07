@@ -36,7 +36,7 @@ class Flipper extends BasicObject {
     this.scene.tweens.add({
       targets: [this.tweener],
       x: isDown ? this.max : this.min,
-      duration: 100,
+      duration: 75,
       onUpdateScope: this,
       onUpdate: () => {
         this.lever.setPosition(
@@ -96,7 +96,7 @@ class Flipper extends BasicObject {
      */
     let lever_offset = (this.width - this.height) / 2 + this.lever_sz;
     lever_offset = lever_offset * ((this.isRight) ? -1 : 1);
-    this.scene.matter.add.constraint(this.body, this.lever.body, 0, 0.4, {
+    this.scene.matter.add.constraint(this.body, this.lever.body, 0, 0.7, {
       pointA: new Phaser.Math.Vector2(lever_offset, 0),
       pointB: new Phaser.Math.Vector2()
     });

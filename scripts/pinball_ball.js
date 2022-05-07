@@ -30,20 +30,23 @@ class Ball extends BasicObject {
     this.ball.setCollisionCategory(cCollisionBall);
     this.ball.setCollidesWith([cCollisionSparks, cCollisionObjects, cCollisionWorld, cCollisionFlipper]);
 
-    /***
     this.sensor_circle = this.scene.add.circle(this.start_x, this.start_y, 32, 0x000022);
-    this.sensor = this.scene.matter.add.gameObject(this.sensor_circle, {isSensor:false}).setCircle(32);
+    this.sensor = this.scene.matter.add.gameObject(this.sensor_circle).setCircle(32);
     this.sensor.setCollisionCategory(cCollisionBall);
     this.sensor.setCollidesWith([cCollisionFlipper]);
+    this.sensor.setSensor(true);
     this.sensor.setMass(0.1);
     this.sensor.setFriction(0);
     this.sensor.setBounce(0);
     this.sensor.setVisible(false);
     this.scene.matter.add.constraint(this.ball, this.sensor, 0, 1);
     this.sensor.setOnCollide((pair) => {
-      console.log("Ball/Flipper warning!");
+      if (this.ball.body.velocity.y > 32) {
+        console.log("Ball/Flipper warning!");
+        let vy = Math.min(-32, Math.abs(this.ball.body.velocity.y)*0.8*-1);
+        this.ball.setVelocity(this.ball.body.velocity.x, vy);
+      }
     });
-    ***/
 
     this.scene.cameras.main.startFollow(this.ball);
     return this;
@@ -51,5 +54,6 @@ class Ball extends BasicObject {
 
   update () {
     super.update();
+    //this.sensor.setCircle(Math.abs(this.ball.body.velocity.y));
   }
 }

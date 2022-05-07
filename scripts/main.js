@@ -18,6 +18,7 @@ const init_model = {
       SceneSelect,
       SceneDialog,
       SceneGame,
+      SceneGameV2,
       SceneContinue
     ],
     parent: "dom_id"    
@@ -27,6 +28,19 @@ const init_model = {
     bgm_enable: true,
     sfx_volume: 0.5,
     sfx_enable: true
+  },
+  game_ctx: {
+    time_remaining: 0,
+    players: [
+      {
+        name: "Princess",
+        health: 100
+      },
+      {
+        name: "Bad Wolf",
+        health: 100
+      }
+    ]
   }
 }
 

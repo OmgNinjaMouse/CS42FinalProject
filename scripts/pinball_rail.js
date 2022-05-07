@@ -13,15 +13,15 @@ class WireRail extends BasicObject {
 
   create () {
     super.create();
-    this.start_post_mdl = this.scene.add.circle(this.start_loc.x, this.start_loc.y, this.thickness, 0x333333);
+    this.start_post_mdl = this.scene.add.circle(this.start_loc.x, this.start_loc.y, this.thickness-1, 0x333333);
     this.scene.add.existing(this.start_post_mdl);
-    this.start_obj = this.scene.matter.add.gameObject(this.start_post_mdl).setCircle(this.thickness);
+    this.start_obj = this.scene.matter.add.gameObject(this.start_post_mdl).setCircle(this.thickness-1);
     this.start_obj.setStatic(true);
     this.start_obj.setBounce(0.8);
 
-    this.end_post_mdl = this.scene.add.circle(this.end_loc.x, this.end_loc.y, this.thickness, 0x333333);
+    this.end_post_mdl = this.scene.add.circle(this.end_loc.x, this.end_loc.y, this.thickness-1, 0x333333);
     this.scene.add.existing(this.end_post_mdl);
-    this.end_obj = this.scene.matter.add.gameObject(this.end_post_mdl).setCircle(this.thickness);
+    this.end_obj = this.scene.matter.add.gameObject(this.end_post_mdl).setCircle(this.thickness-1);
     this.end_obj.setStatic(true);
     this.end_obj.setBounce(0.8);
 

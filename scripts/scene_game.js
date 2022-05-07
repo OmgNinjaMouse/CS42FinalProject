@@ -80,8 +80,6 @@ class SceneGame extends BasicScene {
             default: 'matter',
             matter: {
                 debug: true,
-                positionIterations:12,
-                showPerformance: true
             }
         }
 
@@ -89,8 +87,8 @@ class SceneGame extends BasicScene {
     super(config);
 
     this.addObject("ball", new Ball(this, 925, 910));
-    this.addObject("left_flip", new Flipper(this, 420, 970, false));
-    this.addObject("right_flip", new Flipper(this, 600, 970, true));
+    this.addObject("left_flip", new Flipper(this, 420, 974, false));
+    this.addObject("right_flip", new Flipper(this, 600, 974, true));
     this.addObject("left_wire", new WireRail(this, 0, 900, 400, 960));
     this.addObject("right_wire", new WireRail(this, 620, 960, 890, 900));
     this.addObject("right_vert", new WireRail(this, 890, 800, 890, 900));
@@ -127,7 +125,9 @@ class SceneGame extends BasicScene {
     this.objects.bgm.play(bgm_name);
 
     this.matter.world.setBounds(0,0,960, 540*2, 64, true, true, true, false);
-    this.matter.world.engine.positionIterations=20;
+    this.matter.world.engine.positionIterations=60;
+    this.matter.world.engine.velocityIterations=60;
+
 
     [ this.matter.world.walls.left,
       this.matter.world.walls.right,

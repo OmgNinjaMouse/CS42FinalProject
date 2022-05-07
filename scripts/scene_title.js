@@ -33,7 +33,7 @@ class SceneTitle extends BasicScene {
     this.input.keyboard.on('keydown', (event) => {
       switch (event.code) {
           case "Backslash":
-              this.scene.start("SceneGame");
+              this.scene.start("SceneGameV2");
               break;
           default:
               console.log(event.code);
