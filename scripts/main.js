@@ -44,7 +44,12 @@ const init_model = {
         health: 100,
         spritesheet: "./characters/badwolf/spritesheet.png"
       }
-    ]
+    ],
+    level: {
+      ball: [
+        { x: 250, y: 200 }
+      ]
+    }
   }
 }
 

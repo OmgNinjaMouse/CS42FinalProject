@@ -55,15 +55,21 @@ class RelocatableObject extends BasicObject {
    * Overriding this method will allow for resetting phaser GameObject locations.
    */
   refreshLoc () {
-    this.x = (this.parent.x == undefined) ? this.offset_x : this.offset_x+this.parent.x;
-    this.y = (this.parent.y == undefined) ? this.offset_y : this.offset_y+this.parent.y;
+    this.getLoc();
     console.log("RO (" + this.x + "," + this.y + ")");
     this.allObjects().forEach((obj) => (obj.refreshLoc != undefined) ? obj.refreshLoc(this.x) : 0);
   }
 
 
   getLoc () {
+    this.x = (this.parent.x == undefined) ? this.offset_x : this.offset_x+this.parent.x;
+    this.y = (this.parent.y == undefined) ? this.offset_y : this.offset_y+this.parent.y;
     return { x: this.x, y: this.y };
+  }
+
+  create () {
+    super.create();
+    this.refreshLoc();
   }
 }
 
