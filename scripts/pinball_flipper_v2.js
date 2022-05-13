@@ -8,7 +8,7 @@ class FlipperV2 extends RelocatableObject {
 
   init () {
     super.init();
-    this.height = 24;
+    this.height = 16;
     this.width = 74;
 
     this.lever_sz = 16;
@@ -84,10 +84,12 @@ class FlipperV2 extends RelocatableObject {
     this.body = this.scene.matter.add.gameObject(rectangle, {
       friction: 1,
     });
+    this.body.setRectangle(this.width, this.height*1.5);
     this.body.setMass(7);
     this.body.setBounce(0.4);
     this.body.setCollisionCategory(cCollisionFlipper);
     this.body.setCollidesWith(cCollisionBall);
+
 
     /* Connect the flipper to the game world background */
     /*   Params:  Connected to flipper body, joint length zero, very stiff */
