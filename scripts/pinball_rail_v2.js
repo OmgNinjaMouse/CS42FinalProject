@@ -5,6 +5,7 @@ class WireRailV2 extends RelocatableObject {
     super (scene, x1, y1);
     this.dx = x2 - x1;
     this.dy = y2 - y1;
+    this.thickness = 8;
   }
 
   init () {
@@ -20,7 +21,6 @@ class WireRailV2 extends RelocatableObject {
     };
     this.angle_rad = Math.atan2( this.dy, this.dx );
     this.length = Math.sqrt( Math.pow(this.dx, 2) + Math.pow(this.dy, 2));
-    this.thickness = 8;
   }
 
   create () {
@@ -45,5 +45,13 @@ class WireRailV2 extends RelocatableObject {
     this.rail_obj.rotation = this.angle_rad;
     this.rail_obj.setFriction(0);
     return this;
+  }
+}
+
+
+class Wire extends WireRailV2 {
+  constructor (scene, x1, y1, x2, y2) {
+    super(scene, x1, y1, x2, y2);
+    this.thickness = 2;
   }
 }

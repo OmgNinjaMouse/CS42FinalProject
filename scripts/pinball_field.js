@@ -33,7 +33,12 @@ class FieldBorder extends RelocatableObject {
     super.refreshLoc();
     let loc = this.getLoc();
     if (this.rail_obj != undefined) {
-      this.rail_obj.setPosition(loc.x, loc.y);
+      try {
+        this.rail_obj.setPosition(loc.x, loc.y);
+      } catch (e) {
+        console.log("Error on refresh for rail border?");
+      }
+
     }
   }
 
@@ -84,8 +89,14 @@ class PinballField extends RelocatableObject {
     level_mdl.rails.forEach( (spec, idx) => {
       this.addObject("rail_"+idx, new WireRailV2(this, spec.x1, spec.y1, spec.x2, spec.y2));
     });
+    level_mdl.wires.forEach( (spec, idx) => {
+      this.addObject("wire_"+idx, new Wire(this, spec.x1, spec.y1, spec.x2, spec.y2));
+    });
     level_mdl.bumpers.forEach( (spec, idx) => {
       this.addObject("bump_"+idx, new Bumper(this, spec.x, spec.y));
+    });
+    level_mdl.rollover.forEach( (spec, idx) => {
+      this.addObject("roll_"+idx, new Rollover(this, spec.x, spec.y));
     });
 
     super.init();
