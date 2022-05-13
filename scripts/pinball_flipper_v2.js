@@ -8,8 +8,8 @@ class FlipperV2 extends RelocatableObject {
 
   init () {
     super.init();
-    this.height = 16;
-    this.width = 56;
+    this.height = 24;
+    this.width = 74;
 
     this.lever_sz = 16;
     this.min = Phaser.Math.DegToRad(32);
@@ -55,18 +55,37 @@ class FlipperV2 extends RelocatableObject {
     });
   }
 
+  preload () {
+    super.preload();
+    this.scene.load.image("flippy", "./sprites/flipper.png");
+
+  }
+
   create () {
     super.create();
 
     let loc = this.getLoc();
 
     /* Create the actual body of the flipper */
-    var rectangle = this.scene.add.rectangle(loc.x, loc.y, this.width, this.height, 0x0000ff);
-    this.scene.add.existing(rectangle);
+    var rectangle;
+
+    if (1) {
+      rectangle = this.scene.add.rectangle(loc.x, loc.y, this.width, this.height, 0x0000ff);
+      this.scene.add.existing(rectangle);
+    } else {
+      rectangle = this.scene.add.image(this.start_x, this.start_y, "flippy");
+      rectangle.flipY = true;
+  
+      if (this.isRight) {
+        rectangle.flipX = true;
+      }
+    }
+
     this.body = this.scene.matter.add.gameObject(rectangle, {
-      friction: 1
+      friction: 1,
     });
-    this.body.setMass(10);
+    this.body.setMass(7);
+    this.body.setBounce(0.4);
     this.body.setCollisionCategory(cCollisionFlipper);
     this.body.setCollidesWith(cCollisionBall);
 

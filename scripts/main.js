@@ -50,9 +50,13 @@ const init_model = {
         { x: 250, y: 200 }
       ],
       flippers: [
-        { x: 100, y: 350, dir: "left" },
-        { x: 200, y: 350, dir: "right" }
+        { x: 80, y: 348, dir: "left" },
+        { x: 220, y: 348, dir: "right" }
 
+      ],
+      rails: [
+        { x1: 0, y1: 320, x2: 80, y2: 340 },
+        { x1: 300, y1: 320, x2: 220, y2: 340 }
       ],
     }
   }

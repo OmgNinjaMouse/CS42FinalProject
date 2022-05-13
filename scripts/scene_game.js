@@ -1,11 +1,5 @@
 
 
-const cCollisionSparks = 0x1;
-const cCollisionBall = 0x2;
-const cCollisionObjects = 0x4;
-const cCollisionWorld = 0x8;
-const cCollisionFlipper = 0x10;
-
 
 
 class Bumper extends BasicObject {

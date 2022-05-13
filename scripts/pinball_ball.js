@@ -63,13 +63,15 @@ class BallV2 extends RelocatableObject {
   constructor (scene, x, y) {
     super(scene, x, y);
     this.reset = this.reset.bind(this);
+    this.setKey = this.setKey.bind(this);
     let loc = this.getLoc();
     this.start_x = loc.x;
     this.start_y = loc.y;
-    this.radius = 8;
+    this.radius = 10;
   }
 
   reset () {
+    console.log("Resetting ball.");
     this.ball.setPosition(this.start_x, this.start_y);
     this.ball.setVelocity(0,0);
   }
@@ -91,9 +93,12 @@ class BallV2 extends RelocatableObject {
     this.circle = this.scene.add.image(this.start_x, this.start_y, "ball");
     this.circle.setScale(0.25);
     this.ball = this.scene.matter.add.gameObject(this.circle).setCircle(this.radius);
-
-    this.ball.setMass(1);
+    this.ball.setCollisionCategory(cCollisionBall)
+    this.ball.setMass(0.7);
     this.ball.setBounce(0.8);
+    this.ball.body._pinball_key = this.key;
+
+    this.listen(ControlEvents.ABORT, () => this.reset());
     return this;
   }
 
@@ -106,5 +111,9 @@ class BallV2 extends RelocatableObject {
     if (this.ball) {
       this.ball.setPosition(loc.x, loc.y);
     }
+  }
+
+  setKey (key) {
+    this.key = key;
   }
 }
