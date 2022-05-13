@@ -79,6 +79,9 @@ class PinballField extends RelocatableObject {
     level_mdl.rails.forEach( (spec, idx) => {
       this.addObject("rail_"+idx, new WireRailV2(this, spec.x1, spec.y1, spec.x2, spec.y2));
     });
+    level_mdl.bumpers.forEach( (spec, idx) => {
+      this.addObject("bump_"+idx, new Bumper(this, spec.x, spec.y));
+    });
 
     super.init();
   }
