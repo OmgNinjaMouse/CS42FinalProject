@@ -18,6 +18,15 @@ class FlipperV2 extends RelocatableObject {
     this.tweener = {
       x: this.min
     }
+
+    if (this.isRight) {
+      this.listen(ControlEvents.RIGHT_FLIP_UP, (evt) => this.flip(true));
+      this.listen(ControlEvents.RIGHT_FLIP_DN, (evt) => this.flip(false));
+    } else {
+      this.listen(ControlEvents.LEFT_FLIP_UP, (evt) => this.flip(true));
+      this.listen(ControlEvents.LEFT_FLIP_DN, (evt) => this.flip(false));
+    }
+
     return this;
   }
 

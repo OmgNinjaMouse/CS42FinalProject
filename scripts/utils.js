@@ -42,6 +42,7 @@ class RelocatableObject extends BasicObject {
     this.refreshLoc = this.refreshLoc.bind(this);
     this.getLoc = this.getLoc.bind(this);
     this.setPosition(x, y);
+    this.eventTbl = {};
   }
 
   /* Moves the relocatable object and all children */
@@ -70,6 +71,19 @@ class RelocatableObject extends BasicObject {
   create () {
     super.create();
     this.refreshLoc();
+  }
+
+  dispatch (event) {
+    this.allObjects().forEach( (obj) => obj.dispatch(event));
+    let keys = Object.keys(this.eventTbl);
+    if (keys.includes(event.toString())) {
+      console.log("Handling " + event );
+      this.eventTbl[event.toString()](event);
+    }
+  }
+
+  listen (event, callback) {
+    this.eventTbl[event] = callback;
   }
 }
 

@@ -83,6 +83,8 @@ class SceneGameV2 extends BasicScene {
       }
 
     });
+    this.dispatch = this.dispatch.bind(this);
+
     this.addObject("bgm", new BgmAgent(this));
 
     // 960/2 = 
@@ -116,13 +118,19 @@ class SceneGameV2 extends BasicScene {
     );
 
     this.addObject("stage", new CharacterStage(this, (side_margin*2)+field_width+10, screen_height/2, screen_width-(field_width*2)-(side_margin*3)));
+
+    this.addObject("playerCtrl", new GameController(this, 0, 0));
   }
   
   init () {
     super.init();
     let mdl = getModel();
     mdl.game_ctx.time_remaining = 99 * 1000;
+    this.objects.playerCtrl.listen(this.dispatch);
+  }
 
+  dispatch (uiEvent) {
+    this.objects["left_field"].dispatch(uiEvent);
   }
 
   preload () {
