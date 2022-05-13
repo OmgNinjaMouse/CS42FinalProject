@@ -37,11 +37,15 @@ class PinballField extends RelocatableObject {
   }
 
   init () {
-    super.init();
     let level_mdl = getModel().game_ctx.level;
     level_mdl.ball.forEach( (spec, idx) => {
       this.addObject("ball_"+idx, new BallV2(this, spec.x, spec.y));
-    })
+    });
+    level_mdl.flippers.forEach( (spec, idx) => {
+      this.addObject("flip_"+idx, new FlipperV2(this, spec.x, spec.y, (spec.dir == "right")));
+    });
+
+    super.init();
   }
 
   preload () {

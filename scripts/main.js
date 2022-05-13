@@ -48,7 +48,12 @@ const init_model = {
     level: {
       ball: [
         { x: 250, y: 200 }
-      ]
+      ],
+      flippers: [
+        { x: 100, y: 350, dir: "left" },
+        { x: 200, y: 350, dir: "right" }
+
+      ],
     }
   }
 }
