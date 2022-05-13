@@ -17,7 +17,6 @@ const init_model = {
       SceneOptions,
       SceneSelect,
       SceneDialog,
-      SceneGame,
       SceneGameV2,
       SceneContinue
     ],

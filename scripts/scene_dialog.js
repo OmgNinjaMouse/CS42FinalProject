@@ -106,6 +106,7 @@ const DialogStates = {
   LOADING: 0,
   PLAYER_ONE_TALKING: 1,
   PLAYER_TWO_TALKING: 2,
+  CUTSCENE_DONE: 3
 }
 
 const DialogEvents = {
@@ -127,6 +128,7 @@ class SceneDialog extends BasicScene {
     super.init();
     this.state = DialogStates.LOADING;
     this.start_time = Date.now();
+
   }
 
   preload () {
@@ -159,7 +161,10 @@ class SceneDialog extends BasicScene {
         break;
       case DialogStates.Player_TWO_TALKING:
         console.log("Talking all done!");
-        this.scene.start("SceneGame");
+        this.state = DialogStates.CUTSCENE_DONE;
+        this.scene.start("SceneGameV2");
+        break;
+      default:
         break;
     }
   }
@@ -171,7 +176,11 @@ class SceneDialog extends BasicScene {
     this.input.keyboard.on('keyup', (event) => {
       switch (event.code) {
         case "Space":
-          this.scene.start("SceneGame");
+          if (this.state != DialogStates.CUTSCENE_DONE) {
+            console.log("Anykey pressed.");
+            this.scene.start("SceneGameV2");
+            this.state = DialogStates.CUTSCENE_DONE;
+          }
           break;
       }
     });

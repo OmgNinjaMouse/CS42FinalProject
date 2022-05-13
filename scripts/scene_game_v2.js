@@ -143,8 +143,9 @@ class SceneGameV2 extends BasicScene {
     this.objects.bgm.play(bgm_name);
 
     this.matter.world.setBounds(0,0,960, 540, 64, true, true, true, true);
-    this.matter.world.engine.positionIterations=60;
-    this.matter.world.engine.velocityIterations=60;
+    //this.matter.world.setFPS(120);
+    this.matter.world.engine.positionIterations=120;
+    this.matter.world.engine.velocityIterations=120;
 
     this.objects.left_name.setName(getModel().game_ctx.players[0].name);
     this.objects.right_name.setName(getModel().game_ctx.players[1].name);

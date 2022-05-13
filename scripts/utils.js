@@ -57,7 +57,7 @@ class RelocatableObject extends BasicObject {
    */
   refreshLoc () {
     this.getLoc();
-    console.log("RO (" + this.x + "," + this.y + ")");
+    //console.log("RO (" + this.x + "," + this.y + ")");
     this.allObjects().forEach((obj) => (obj.refreshLoc != undefined) ? obj.refreshLoc(this.x) : 0);
   }
 
