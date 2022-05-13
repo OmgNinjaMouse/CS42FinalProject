@@ -1,19 +1,20 @@
 
-class Launcher extends BasicObject {
+class Launcher extends RelocatableObject {
     Events = {
       RELEASED: 0,
       PULLING: 1
     }
     constructor(scene, x, y) {
-      super(scene);
+      super(scene, x, y);
       this.fsmFree = this.fsmFree.bind(this);
       this.fsmPulling = this.fsmPulling.bind(this);
       this.fsmLaunch = this.fsmLaunch.bind(this);
   
       this.x = x;
       this.y = y;
-      this.width = 36;
-      this.pinSize = 4;
+      this.width = 28;
+      this.pinSize = 2;
+      this.mass = 10;
       this.hammerWidth = this.width - (this.pinSize*4)
       this.state = this.fsmFree;
       this.event = this.Events.RELEASED;
@@ -42,7 +43,7 @@ class Launcher extends BasicObject {
         { x: this.x, y: this.y }
       ].map( (loc) => this.scene.add.circle(loc.x, loc.y, this.hammerWidth/2, 0x3333aa))
       .map( (mdl) => this.scene.matter.add.gameObject(mdl) )
-      .map( (obj) => obj.setMass(20).setFriction(0) );
+      .map( (obj) => obj.setMass(this.mass).setFriction(0) );
   
       /* Create two constraints on the hammer to pins to create the spring */
       this.springs = this.pins
@@ -66,6 +67,9 @@ class Launcher extends BasicObject {
         this.hammerWidth,
         1.0
       );
+
+      this.listen(ControlEvents.LAUNCH_PULL, () => this.pull());
+      this.listen(ControlEvents.LAUNCH_RELEASE, () => this.release());
     }
   
     fsmFree () {

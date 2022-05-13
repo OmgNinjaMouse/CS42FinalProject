@@ -59,8 +59,10 @@ class PinballField extends RelocatableObject {
     this.objects.frame_btm.setCollisionCb((pair) => {
       
       let key = pair.bodyB._pinball_key;
-      console.log("Deadball " + key);
-      this.objects[key].reset();
+      if (key != undefined) {
+        console.log("Deadball " + key);
+        this.objects[key].reset();
+      }
     });
   }
 
@@ -72,6 +74,9 @@ class PinballField extends RelocatableObject {
       let obj = this.addObject("ball_"+idx, new BallV2(this, spec.x, spec.y));
       obj.setKey("ball_"+idx);
       this.balls.push(obj);
+    });
+    level_mdl.launcher.forEach( (spec, idx) => {
+      this.addObject("launch_" + idx, new Launcher(this, spec.x, spec.y));
     });
     level_mdl.flippers.forEach( (spec, idx) => {
       this.addObject("flip_"+idx, new FlipperV2(this, spec.x, spec.y, (spec.dir == "right")));
