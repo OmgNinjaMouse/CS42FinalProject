@@ -1,0 +1,23 @@
+Authors: Benjamin K. Smith (BenCreating), Johannes Sjölund (wulax), Matthew Krohn (makrohn), Stephen Challener (Redshrike), William.Thompsonj, Sander Frenken (castelonia), bluecarrot16, Thane Brimhall (pennomi), laetissima, David Conway Jr. (JaidynReiman), Joe White, XOR
+
+- body/male/wolf/gray.png: by Benjamin K. Smith (BenCreating), Johannes Sjölund (wulax), Matthew Krohn (makrohn), Stephen Challener (Redshrike), William.Thompsonj, Sander Frenken (castelonia). License(s): CC-BY-SA 3.0, GPL 3.0. 
+    - https://opengameart.org/content/lpc-wolfman
+
+- body/male/wolf/head/gray.png: by Benjamin K. Smith (BenCreating), Johannes Sjölund (wulax), Matthew Krohn (makrohn), Stephen Challener (Redshrike), William.Thompsonj, Sander Frenken (castelonia). License(s): CC-BY-SA 3.0, GPL 3.0. 
+    - https://opengameart.org/content/lpc-wolfman
+
+- bracers/male/2.png: by Johannes Sjölund (wulax). License(s): CC-BY-SA 3.0, GPL 3.0. 
+    - https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+
+- torso/clothes/vest_open/male/red.png: by bluecarrot16, Thane Brimhall (pennomi), laetissima. License(s): CC-BY-SA 3.0, GPL 3.0. 
+    - https://opengameart.org/content/lpc-2-characters
+    - https://opengameart.org/content/lpc-gentleman
+    - https://opengameart.org/content/lpc-pirates
+
+- legs/pants/male/navy.png: by bluecarrot16, David Conway Jr. (JaidynReiman), Joe White, Matthew Krohn (makrohn), Johannes Sjölund (wulax). License(s): CC-BY-SA 3.0, GPL 3.0. 
+    - https://opengameart.org/content/liberated-pixel-cup-lpc-base-assets-sprites-map-tiles
+    - https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+
+- weapon/slash/male/dagger.png: by Johannes Sjölund (wulax), XOR. License(s): CC-BY-SA 3.0. 
+    - https://opengameart.org/content/lpc-medieval-fantasy-character-sprites
+    - https://opengameart.org/content/knife-walk

@@ -1,0 +1,14 @@
+{
+  characters: [
+    {
+      name: "Princess",
+      portrait: "./princess/portrait.png",
+      sprites: "./princess/spritesheet.png"
+    },
+    {
+      name: "Bad Wolf",
+      portrait: "./badwolf/portrait.png",
+      sprites: "./badwolf/spritesheet.png"
+    }
+  ]
+}

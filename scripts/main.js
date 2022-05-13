@@ -34,11 +34,15 @@ const init_model = {
     players: [
       {
         name: "Princess",
-        health: 100
+        key: "princess",
+        health: 100,
+        spritesheet: "./characters/princess/spritesheet.png"
       },
       {
         name: "Bad Wolf",
-        health: 100
+        key: "badwolf",
+        health: 100,
+        spritesheet: "./characters/badwolf/spritesheet.png"
       }
     ]
   }

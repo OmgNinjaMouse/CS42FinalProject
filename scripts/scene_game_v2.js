@@ -1,4 +1,28 @@
 
+class CharacterStage extends RelocatableObject {
+  constructor(parent, x, y, width) {
+    super(parent, x,y);
+    this.width = width;
+  }
+
+  init() {
+    let char_mdl = getModel().game_ctx.players;
+    this.addObject("left_char", new LpcSprite(this, char_mdl[0].key, char_mdl[0].spritesheet, 0, 0));
+    this.addObject("right_char", new LpcSprite(this, char_mdl[1].key, char_mdl[1].spritesheet, this.width-64, 0));
+
+  }
+
+  refreshLoc () {
+    super.refreshLoc();
+  }
+
+  create () {
+    super.create();
+    this.refreshLoc();
+  }
+}
+
+
 class HealthBar extends RelocatableObject {
   constructor(parent, x, y, width) {
     super(parent, x, y);
@@ -91,6 +115,7 @@ class SceneGameV2 extends BasicScene {
       )
     );
 
+    this.addObject("stage", new CharacterStage(this, (side_margin*2)+field_width+10, screen_height/2, screen_width-(field_width*2)-(side_margin*3)));
   }
   
   init () {
