@@ -38,6 +38,7 @@ class SelectPortrait extends BasicObject {
 
   preload () {
     this.graphics = this.scene.add.graphics();
+    this.scene.load.image("placeholder", "./sprites/placeholder.png");
   }
 
   redraw () {
@@ -67,6 +68,10 @@ class SelectPortrait extends BasicObject {
 
   create () {
     super.create();
+    this.portrait = this.scene.add.sprite(this.x, this.y, "placeholder");
+    this.portrait.setScale(0.45);
+    this.portrait.setDepth(2);
+
     this.redraw();
   }
 
@@ -143,11 +148,24 @@ class SelectPortrait extends BasicObject {
   setLockedCb (callback) {
     this.callback = callback;
   }
+
+  setPortrait (key, image_fn) {
+    console.log("Starting lazy load for key " + key + " file " + image_fn);
+    this.scene.load.image(key, image_fn)
+	  this.scene.load.once(Phaser.Loader.Events.COMPLETE, () => {
+		  // texture loaded so use instead of the placeholder
+      console.log("Lazy load finished for " + key );
+		  this.portrait.setTexture(key)
+      this.portrait.setScale(0.5);
+	  })
+	  this.scene.load.start()
+  }
 }
 
 class SelectGallery extends BasicObject {
   constructor (parent) {
     super(parent);
+    this.setPortrait = this.setPortrait.bind(this);
     this.num_chars = 8;
     this.chars_per_row = 4;
     this.sprite_width = 70;
@@ -176,6 +194,11 @@ class SelectGallery extends BasicObject {
         callback(id)
       });
     })
+  }
+
+  setPortrait(index, image_fn) {
+    let key = "char_" + index;
+    this.objects[key].setPortrait(key, image_fn);
   }
 
   selectRandom () {
@@ -250,13 +273,21 @@ class SceneSelect extends BasicScene {
     super.preload();
     this.load.plugin('rexroundrectangleplugin', 'resources/rexroundrectangleplugin.min.js', true);   
     //this.load.plugin('rexroundrectangleplugin', 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexroundrectangleplugin.min.js', true);   
-    
+
+    this.load.json('character_data', 'characters/characters.json');
+   
   }
 
   create () {
     super.create();
     this.objects.gallery.setLockedCb(this.choiceMade);
     this.objects.bgm.play('menu_bgm');
+
+    this.characters = this.cache.json.get('character_data');
+    console.log(this.characters);
+    this.characters.characters.forEach( (character, idx) => {
+      this.objects.gallery.setPortrait(idx, character.portrait);
+    })
   }
 
   fsm (event, character_id) {

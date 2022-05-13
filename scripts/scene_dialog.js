@@ -133,7 +133,7 @@ class SceneDialog extends BasicScene {
 
   preload () {
     super.preload();
-    this.load.plugin('rexroundrectangleplugin', 'resources/rexroundrectangleplugin.min.js', true);   
+    this.load.plugin('rexroundrectangleplugin', 'resources/rexroundrectangleplugin.min.js', true);
   }
 
   create () {

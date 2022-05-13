@@ -1,14 +1,14 @@
 {
-  characters: [
+  "characters": [
     {
-      name: "Princess",
-      portrait: "./princess/portrait.png",
-      sprites: "./princess/spritesheet.png"
+      "name": "Princess",
+      "portrait": "characters/princess/portrait.png",
+      "sprites": "characters/princess/spritesheet.png"
     },
     {
-      name: "Bad Wolf",
-      portrait: "./badwolf/portrait.png",
-      sprites: "./badwolf/spritesheet.png"
+      "name": "Bad Wolf",
+      "portrait": "characters/badwolf/portrait.png",
+      "sprites": "characters/badwolf/spritesheet.png"
     }
   ]
 }
