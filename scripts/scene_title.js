@@ -35,6 +35,9 @@ class SceneTitle extends BasicScene {
           case "Backslash":
               this.scene.start("SceneGameV2");
               break;
+          case "Delete":
+              this.scene.start("SceneTest");
+              break;
           default:
               console.log(event.code);
               break;

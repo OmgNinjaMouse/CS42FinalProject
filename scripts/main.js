@@ -18,7 +18,8 @@ const init_model = {
       SceneSelect,
       SceneDialog,
       SceneGameV2,
-      SceneContinue
+      SceneContinue,
+      SceneTest
     ],
     parent: "dom_id"    
   },
@@ -49,23 +50,27 @@ const init_model = {
         { x: 270, y: 300 }
       ],
       launcher: [
-        { x: 270, y: 350 }
+        { x: 270, y: 360 }
       ],
       flippers: [
         { x: 80, y: 348, dir: "left" },
         { x: 220, y: 348, dir: "right" }
       ],
+      slingshot: [
+        { x: 60, y: 268, dir: "left" },
+        { x: 235, y: 268, dir: "right" },
+      ],
       rails: [
         { x1: 0, y1: 320, x2: 80, y2: 340 },
         { x1: 250, y1: 320, x2: 220, y2: 340 },
-        { x1: 250, y1: 0, x2: 300, y2: 50 },
-        { x1: 140, y1: 0, x2: 140, y2: 50 },
+        { x1: 250, y1: 0, x2: 300, y2: 40 },
+        { x1: 160, y1: 0, x2: 140, y2: 50 },
       ],
       wires: [
-        { x1: 150, y1: 60, x2: 150, y2: 90 },
-        { x1: 185, y1: 60, x2: 185, y2: 90 },
-        { x1: 220, y1: 60, x2: 220, y2: 90 },
-        { x1: 255, y1: 60, x2: 255, y2: 90 }
+        { x1: 150, y1: 65, x2: 150, y2: 95 },
+        { x1: 185, y1: 65, x2: 185, y2: 95 },
+        { x1: 220, y1: 65, x2: 220, y2: 95 },
+        { x1: 255, y1: 65, x2: 255, y2: 95 }
       ],
       bumpers: [
         { x: 60, y: 50 },
@@ -73,9 +78,9 @@ const init_model = {
         { x: 60, y: 100 }
       ],
       rollover: [
-        { x: 167, y: 70 },
-        { x: 185+17, y: 70 },
-        { x: 220+17, y: 70 }
+        { x: 167, y: 75 },
+        { x: 185+17, y: 75 },
+        { x: 220+17, y: 75 }
       ],
     }
   }

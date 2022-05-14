@@ -98,6 +98,15 @@ class PinballField extends RelocatableObject {
     level_mdl.rollover.forEach( (spec, idx) => {
       this.addObject("roll_"+idx, new Rollover(this, spec.x, spec.y));
     });
+    level_mdl.slingshot.forEach( (spec, idx) => {
+      let key = "sling_"+idx;
+      if (spec.dir == "right") {
+        this.addObject(key, new SlingshotRight(this, spec.x, spec.y));
+      } else {
+        this.addObject(key, new SlingshotLeft(this, spec.x, spec.y));
+      }
+
+    });
 
     super.init();
   }
