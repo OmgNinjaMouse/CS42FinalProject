@@ -40,10 +40,10 @@ class BallV2 extends RelocatableObject {
 
     this.listen(ControlEvents.ABORT, () => this.reset());
     this.listen(ControlEvents.LEFT_TILT, () => {
-      this.ball.setVelocityX(this.ball.body.velocity.x + 5);
+      this.ball.setVelocityX(this.ball.body.velocity.x + 15);
     })
     this.listen(ControlEvents.RIGHT_TILT, () => {
-      this.ball.setVelocityX(this.ball.body.velocity.x - 5);
+      this.ball.setVelocityX(this.ball.body.velocity.x - 15);
     })
 
     return this;

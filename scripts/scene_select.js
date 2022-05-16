@@ -156,7 +156,7 @@ class SelectPortrait extends BasicObject {
 		  // texture loaded so use instead of the placeholder
       console.log("Lazy load finished for " + key );
 		  this.portrait.setTexture(key)
-      this.portrait.setScale(0.5);
+      this.portrait.setScale(0.4);
 	  })
 	  this.scene.load.start()
   }
@@ -298,6 +298,7 @@ class SceneSelect extends BasicScene {
           case SelectEvents.SELECTION_MADE:
             console.log("Player One has chosen: " + character_id);
             this.state = SelectStates.PLAYER_TWO_WAITING;
+            this.player_one = character_id;
             this.objects.gallery.selectRandom();
             break;
         }
@@ -306,6 +307,7 @@ class SceneSelect extends BasicScene {
         switch (event) {
           case SelectEvents.SELECTION_MADE:
             console.log("Player Two has chosen: " + character_id);
+            this.player_two = character_id;
             this.state = SelectStates.DISPLAY;
             break;
         }
@@ -314,8 +316,30 @@ class SceneSelect extends BasicScene {
         switch (event) {
           case SelectEvents.DISPLAY_DONE:
             console.log("Start Game!@!!");
-            this.scene.start("SceneDialog");
+            let mdl = getModel().game_ctx.players;
+            let p1_char = this.characters.characters[this.player_one];
+            let p2_char = this.characters.characters[this.player_two];
+            mdl[0] = {
+              name: p1_char.name,
+              key: p1_char.key,
+              health: 100,
+              spritesheet: p1_char.sprites
+            }
+            mdl[1] = {
+              name: p2_char.name,
+              key: p2_char.key,
+              health: 100,
+              spritesheet: p2_char.sprites
+            }
 
+            this.load.json("field", getModel().game_ctx.level_fn);
+            this.load.once(Phaser.Loader.Events.COMPLETE, () => {
+              console.log("Level JSON loaded.");
+              let ctx = getModel().game_ctx;
+              ctx.level = this.cache.json.get('field');
+              this.scene.start("SceneDialog");
+            });
+            this.load.start();
             break;
         }
         break;

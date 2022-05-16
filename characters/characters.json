@@ -2,13 +2,59 @@
   "characters": [
     {
       "name": "Princess",
+      "key": "princess",
       "portrait": "characters/princess/portrait.png",
-      "sprites": "characters/princess/spritesheet.png"
+      "sprites": "characters/princess/spritesheet.png",
+      "level": "characters/princess/pinball.json"
     },
     {
       "name": "Bad Wolf",
+      "key": "badwolf",
       "portrait": "characters/badwolf/portrait.png",
-      "sprites": "characters/badwolf/spritesheet.png"
+      "sprites": "characters/badwolf/spritesheet.png",
+      "level": "characters/princess/pinball.json"
+    },
+    {
+      "name": "D. Monk",
+      "key": "dmonk",
+      "portrait": "characters/dmonk/portrait.png",
+      "sprites": "characters/dmonk/spritesheet.png",
+      "level": "characters/princess/pinball.json"
+    },
+    {
+      "name": "Bandit Rob",
+      "key": "banditrob",
+      "portrait": "characters/banditrob/portrait.png",
+      "sprites": "characters/banditrob/spritesheet.png",
+      "level": "characters/princess/pinball.json"
+    },
+    {
+      "name": "Red Rider",
+      "key": "redrider",
+      "portrait": "characters/redrider/portrait.png",
+      "sprites": "characters/redrider/spritesheet.png",
+      "level": "characters/princess/pinball.json"
+    },
+    {
+      "name": "Mama Ogre",
+      "key": "mamaogre",
+      "portrait": "characters/mamaogre/portrait.png",
+      "sprites": "characters/mamaogre/spritesheet.png",
+      "level": "characters/princess/pinball.json"
+    },
+    {
+      "name": "Grandma E.",
+      "key": "grandmae",
+      "portrait": "characters/grandmae/portrait.png",
+      "sprites": "characters/grandmae/spritesheet.png",
+      "level": "characters/princess/pinball.json"
+    },
+    {
+      "name": "Jack Nimble",
+      "key": "woodsman",
+      "portrait": "characters/woodsman/portrait.png",
+      "sprites": "characters/woodsman/spritesheet.png",
+      "level": "characters/princess/pinball.json"
     }
   ]
 }

@@ -76,6 +76,10 @@ class PinballField extends RelocatableObject {
     this.balls = [];
 
     let level_mdl = getModel().game_ctx.level;
+    if (Object.keys(level_mdl).length == 0) {
+      return;
+    }
+
     level_mdl.ball.forEach( (spec, idx) => {
       let obj = this.addObject("ball_"+idx, new BallV2(this, spec.x, spec.y));
       obj.setKey("ball_"+idx);

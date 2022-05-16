@@ -45,7 +45,9 @@ const init_model = {
         spritesheet: "./characters/badwolf/spritesheet.png"
       }
     ],
+    level_fn: "characters/princess/pinball.json",
     level: {
+      /**
       ball: [
         { x: 270, y: 300 }
       ],
@@ -87,6 +89,7 @@ const init_model = {
         { x: 20, y: 180, dir: "left", gid: "sidebar" },
         { x: 20, y: 140, dir: "left", gid: "sidebar" }
       ],
+      **/
     }
   }
 }

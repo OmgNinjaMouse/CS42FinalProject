@@ -33,14 +33,23 @@ class SceneTitle extends BasicScene {
     this.input.keyboard.on('keydown', (event) => {
       switch (event.code) {
           case "Backslash":
+            
+            this.load.json("field", getModel().game_ctx.level_fn);
+            this.load.once(Phaser.Loader.Events.COMPLETE, () => {
+              console.log("Level JSON loaded.");
+              let ctx = getModel().game_ctx;
+              ctx.level = this.cache.json.get('field');
               this.scene.start("SceneGameV2");
-              break;
+            });
+            this.load.start();
+            
+            break;
           case "Delete":
-              this.scene.start("SceneTest");
-              break;
+            this.scene.start("SceneTest");
+            break;
           default:
-              console.log(event.code);
-              break;
+            console.log(event.code);
+            break;
       }
   });
   }
