@@ -105,7 +105,22 @@ class PinballField extends RelocatableObject {
       } else {
         this.addObject(key, new SlingshotLeft(this, spec.x, spec.y));
       }
-
+    });
+    level_mdl.targets.forEach( (spec, idx) => {
+      switch (spec.dir) {
+        case "left":
+          this.addObject("target_"+idx, new BumpTargetLeft(this, spec.x, spec.y));
+          break;
+        case "right":
+          this.addObject("target_"+idx, new BumpTargetRight(this, spec.x, spec.y));
+          break;
+        case "top":
+          this.addObject("target_"+idx, new BumpTargetTop(this, spec.x, spec.y));
+          break;
+        case "bottom":
+          this.addObject("target_"+idx, new BumpTargetBottom(this, spec.x, spec.y));
+          break;
+      }
     });
 
     super.init();

@@ -49,6 +49,7 @@ const init_model = {
       ball: [
         { x: 270, y: 300 }
       ],
+      
       launcher: [
         { x: 270, y: 360 }
       ],
@@ -57,8 +58,8 @@ const init_model = {
         { x: 220, y: 348, dir: "right" }
       ],
       slingshot: [
-        { x: 60, y: 268, dir: "left" },
-        { x: 235, y: 268, dir: "right" },
+        { x: 60, y: 266, dir: "left" },
+        { x: 235, y: 266, dir: "right" },
       ],
       rails: [
         { x1: 0, y1: 320, x2: 80, y2: 340 },
@@ -81,6 +82,10 @@ const init_model = {
         { x: 167, y: 75 },
         { x: 185+17, y: 75 },
         { x: 220+17, y: 75 }
+      ],
+      targets: [
+        { x: 20, y: 180, dir: "left" },
+        { x: 20, y: 140, dir: "left" }
       ],
     }
   }
