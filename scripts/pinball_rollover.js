@@ -1,8 +1,9 @@
 
 
 class Rollover extends RelocatableObject {
-  constructor (parent, x, y ) {
+  constructor (parent, x, y, gid ) {
     super(parent, x, y);
+    this.gid = gid;
   }
 
   init () {
@@ -33,16 +34,27 @@ class Rollover extends RelocatableObject {
     this.marker.setOnCollide((pair) => {
       this.ignite();
     });
+
+    this.scene.q(ControlEvents.REGISTER_GROUP, { grp: this.gid, id: this.obj_key });
+    this.listen(ControlEvents.GROUP_COMPLETE, (event, data) => {
+      if (data.grp == this.gid) {
+        this.reset();
+      }
+    });
   }
 
   ignite () {
-    this.lit = true;
-    this.marker.setTexture("rollover_lit");
+    if (this.lit == false) {
+      this.lit = true;
+      this.marker.setTexture("rollover_lit");
+      this.scene.q(ControlEvents.GROUP_UPDATE, { grp: this.gid, id: this.obj_key });
+    }
   }
 
   reset () {
     this.lit = false;
     this.marker.setTexture("rollover_dark");
+    this.scene.q(ControlEvents.GROUP_CLEAR, { grp: this.gid, id: this.obj_key });
   }
 
   update () {

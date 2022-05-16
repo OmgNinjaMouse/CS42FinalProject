@@ -1,10 +1,11 @@
 
 class BumpTargetLeft extends RelocatableObject {
-  constructor (parent, x, y) {
+  constructor (parent, x, y, gid) {
     super(parent, x, y);
     this.ignite = this.ignite.bind(this);
     this.reset = this.reset.bind(this);
     this.bump_debounce = 200;
+    this.gid = gid;
 
     this.marker_offset = { x: 20, y: 0 };
     this.actuator_offset = { x: 15, y: 0 };
@@ -63,6 +64,14 @@ class BumpTargetLeft extends RelocatableObject {
     this.target_obj.setOnCollide((pair) => {
       this.ignite();
     });
+
+    /* Group Interface */
+    this.scene.q(ControlEvents.REGISTER_GROUP, { grp: this.gid, id: this.obj_key });
+    this.listen(ControlEvents.GROUP_COMPLETE, (event, data) => {
+      if (data.grp == this.gid) {
+        this.reset();
+      }
+    });
   }
 
   ignite () {
@@ -85,6 +94,7 @@ class BumpTargetLeft extends RelocatableObject {
     if (this.lit == false) {
       this.lit = true;
       this.marker.setTexture("rollover_lit");
+      this.scene.q(ControlEvents.GROUP_UPDATE, { grp: this.gid, id: this.obj_key });
     }
 
 
@@ -93,6 +103,7 @@ class BumpTargetLeft extends RelocatableObject {
   reset () {
     this.lit = false;
     this.marker.setTexture("rollover_dark");
+    this.scene.q(ControlEvents.GROUP_CLEAR, { grp: this.gid, id: this.obj_key });
   }
 
   update () {
@@ -106,8 +117,8 @@ class BumpTargetLeft extends RelocatableObject {
 }
 
 class BumpTargetRight extends BumpTargetLeft {
-  constructor (parent, x, y) {
-    super(parent, x, y);
+  constructor (parent, x, y, gid) {
+    super(parent, x, y, gid);
     
     this.marker_offset = { x: -20, y: 0 };
     this.actuator_offset = { x: -15, y: 0 };
@@ -116,8 +127,8 @@ class BumpTargetRight extends BumpTargetLeft {
 }
 
 class BumpTargetTop extends BumpTargetLeft {
-  constructor (parent, x, y) {
-    super(parent, x, y);
+  constructor (parent, x, y, gid) {
+    super(parent, x, y, gid);
     
     this.marker_offset = { x: 0, y: 20 };
     this.actuator_offset = { x: 0, y: 15 };
@@ -126,8 +137,8 @@ class BumpTargetTop extends BumpTargetLeft {
 }
 
 class BumpTargetBottom extends BumpTargetLeft {
-  constructor (parent, x, y) {
-    super(parent, x, y);
+  constructor (parent, x, y, gid) {
+    super(parent, x, y, gid);
     
     this.marker_offset = { x: 0, y: -20 };
     this.actuator_offset = { x: 0, y: -15 };

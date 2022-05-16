@@ -1,75 +1,50 @@
-
-class CharacterStage extends RelocatableObject {
-  constructor(parent, x, y, width) {
-    super(parent, x,y);
-    this.width = width;
+class GroupManager extends RelocatableObject {
+  constructor (parent, x, y) {
+    super(parent, x, y);
+    this.groups = {};
   }
 
-  init() {
-    let char_mdl = getModel().game_ctx.players;
-    this.addObject("left_char", new LpcSprite(this, char_mdl[0].key, char_mdl[0].spritesheet, 0, 0));
-    this.addObject("right_char", new LpcSprite(this, char_mdl[1].key, char_mdl[1].spritesheet, this.width-64, 0));
+  init () {
+    this.listen(ControlEvents.REGISTER_GROUP, (event, data) => {
+      console.log("Group Register to " + data.grp + " by " + data.id);
+      let group_list = Object.keys(this.groups);
+      if (group_list.includes(data.grp) == false) {
+        this.groups[data.grp] = {};
+      }
+      this.groups[data.grp][data.id] = { state: false };
+    });
 
-  }
+    this.listen(ControlEvents.GROUP_UPDATE, (event, data) => {
+      console.log("Group Update to " + data.grp + " by " + data.id );
+      this.groups[data.grp][data.id] = { state: true };
+      let status = Object.keys(this.groups[data.grp])
+        .map( (obj_id) => this.groups[data.grp][obj_id])
+        .reduce((data, obj) => {
+          return {
+            lit: data.lit + ((obj.state) ? 1 : 0),
+            count: data.count + 1
+          }
+        }, { lit: 0, count: 0 })
+      
+      if (status.lit == status.count) {
+        console.log("Group " + data.grp + " completed!");
+        setTimeout(() => {
+            this.scene.q(ControlEvents.GROUP_COMPLETE, { grp: data.grp });
+        }, 200);
+      }
+    })
 
-  refreshLoc () {
-    super.refreshLoc();
+    this.listen(ControlEvents.GROUP_CLEAR, (event, data) => {
+      this.groups[data.grp][data.id] = { state: false };
+    })
   }
 
   create () {
     super.create();
-    this.refreshLoc();
+
   }
 }
 
-
-class HealthBar extends RelocatableObject {
-  constructor(parent, x, y, width) {
-    super(parent, x, y);
-    this.justify = this.justify.bind(this);
-    this.setHealth = this.setHealth.bind(this);
-
-    console.log("Width:" + width);
-    this.width = width;
-    this.height = 30;
-    this.health = 100;
-    this.max_health = 100;
-  }
-
-  init () {
-    super.init();
-    this.is_right = false;
-  }
-
-  create () {
-    let loc = this.getLoc();
-    this.background = this.scene.add.rectangle(loc.x, loc.y, this.width, this.height, 0x333366);
-    this.scene.add.existing(this.background);
-    this.background.setOrigin(0, 0.5);      
-
-    this.foreground = this.scene.add.rectangle(loc.x, loc.y, (this.width*0.95)*(this.health/this.max_health), this.height*0.8, 0x116633);
-    this.scene.add.existing(this.foreground);
-    this.foreground.setOrigin(0, 0.5);
-  }
-
-  justify (is_right) {
-    this.is_right = is_right;
-    if (this.is_right) {
-      this.background.setOrigin(1, 0.5);
-      this.foreground.setOrigin(1, 0.5);
-    } else {
-      this.background.setOrigin(0, 0.5);      
-      this.foreground.setOrigin(0, 0.5);
-    }
-  }
-
-  setHealth (health) {
-    this.health = health;
-    this.foreground.setSize((this.width*0.95)*(this.health/this.max_health), this.height*0.8);
-    this.justify(this.is_right);
-  }
-
-}
 
 class SceneGameV2 extends BasicScene {
   constructor () {
@@ -129,8 +104,12 @@ class SceneGameV2 extends BasicScene {
     this.objects.playerCtrl.listen(this.dispatch);
   }
 
-  dispatch (uiEvent) {
-    this.objects["left_field"].dispatch(uiEvent);
+  dispatch (uiEvent, data) {
+    this.objects["left_field"].dispatch(uiEvent, data);
+  }
+
+  q (uiEvent, data) {
+    setTimeout(() => this.dispatch(uiEvent, data), 0);
   }
 
   preload () {

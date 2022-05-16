@@ -9,6 +9,7 @@ class BasicObject {
     this.addObject = this.addObject.bind(this);
     this.getScene = this.getScene.bind(this);
     this.allObjects = this.allObjects.bind(this);
+    this.setObjKey = this.setObjKey.bind(this);
     this.objects = {};
   }
 
@@ -19,6 +20,10 @@ class BasicObject {
 
   addObject (key, basic_object) {
     this.objects[key] = basic_object;
+
+    if (basic_object.setObjKey != undefined) {
+      basic_object.setObjKey(key);
+    }
     return basic_object;
   }
 
@@ -28,6 +33,10 @@ class BasicObject {
 
   allObjects () {
     return Object.keys(this.objects).map( (key) => this.objects[key]);
+  }
+
+  setObjKey (obj_key) {
+    this.obj_key = obj_key;
   }
 }
 
@@ -73,12 +82,12 @@ class RelocatableObject extends BasicObject {
     this.refreshLoc();
   }
 
-  dispatch (event) {
-    this.allObjects().forEach( (obj) => obj.dispatch(event));
+  dispatch (event, data) {
+    this.allObjects().forEach( (obj) => obj.dispatch(event, data));
     let keys = Object.keys(this.eventTbl);
     if (keys.includes(event.toString())) {
       console.log("Handling " + event );
-      this.eventTbl[event.toString()](event);
+      this.eventTbl[event.toString()](event, data);
     }
   }
 
@@ -104,6 +113,9 @@ class BasicScene extends Phaser.Scene {
 
   addObject (key, basic_object) {
     this.objects[key] = basic_object;
+    if (basic_object.setObjKey != undefined) {
+      basic_object.setObjKey(key);
+    }
     return basic_object;
   }
 

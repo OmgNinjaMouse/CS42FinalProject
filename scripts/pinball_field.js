@@ -60,6 +60,7 @@ class PinballField extends RelocatableObject {
     this.addObject("frame_btm", new FieldBorder(this, this.width/2, this.height, this.width, this.border_size));
     this.addObject("frame_lft", new FieldBorder(this, 0, this.height/2, this.border_size, this.height));
     this.addObject("frame_rgt", new FieldBorder(this, this.width, this.height/2, this.border_size, this.height));
+    this.addObject("group_mgr", new GroupManager(this, 0, 0));
 
     this.objects.frame_btm.setCollisionCb((pair) => {
       
@@ -96,7 +97,7 @@ class PinballField extends RelocatableObject {
       this.addObject("bump_"+idx, new Bumper(this, spec.x, spec.y));
     });
     level_mdl.rollover.forEach( (spec, idx) => {
-      this.addObject("roll_"+idx, new Rollover(this, spec.x, spec.y));
+      this.addObject("roll_"+idx, new Rollover(this, spec.x, spec.y, spec.gid));
     });
     level_mdl.slingshot.forEach( (spec, idx) => {
       let key = "sling_"+idx;
@@ -109,16 +110,16 @@ class PinballField extends RelocatableObject {
     level_mdl.targets.forEach( (spec, idx) => {
       switch (spec.dir) {
         case "left":
-          this.addObject("target_"+idx, new BumpTargetLeft(this, spec.x, spec.y));
+          this.addObject("target_"+idx, new BumpTargetLeft(this, spec.x, spec.y, spec.gid));
           break;
         case "right":
-          this.addObject("target_"+idx, new BumpTargetRight(this, spec.x, spec.y));
+          this.addObject("target_"+idx, new BumpTargetRight(this, spec.x, spec.y, spec.gid));
           break;
         case "top":
-          this.addObject("target_"+idx, new BumpTargetTop(this, spec.x, spec.y));
+          this.addObject("target_"+idx, new BumpTargetTop(this, spec.x, spec.y, spec.gid));
           break;
         case "bottom":
-          this.addObject("target_"+idx, new BumpTargetBottom(this, spec.x, spec.y));
+          this.addObject("target_"+idx, new BumpTargetBottom(this, spec.x, spec.y, spec.gid));
           break;
       }
     });
