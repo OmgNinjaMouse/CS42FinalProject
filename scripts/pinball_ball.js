@@ -4,6 +4,7 @@ class BallV2 extends RelocatableObject {
     super(scene, x, y);
     this.reset = this.reset.bind(this);
     this.setKey = this.setKey.bind(this);
+    this.start = this.start.bind(this);
     let loc = this.getLoc();
     this.start_x = loc.x;
     this.start_y = loc.y;
@@ -37,6 +38,7 @@ class BallV2 extends RelocatableObject {
     this.ball.setMass(0.6);
     this.ball.setBounce(0.8);
     this.ball.body._pinball_key = this.key;
+    this.ball.setActive(false);
 
     this.listen(ControlEvents.ABORT, () => this.reset());
     this.listen(ControlEvents.LEFT_TILT, () => {
@@ -47,6 +49,12 @@ class BallV2 extends RelocatableObject {
     })
 
     return this;
+  }
+
+  start () {
+    console.log("ball started!");
+    this.ball.setActive(true);
+    this.reset();
   }
 
   update () {

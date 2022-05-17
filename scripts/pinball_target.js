@@ -25,6 +25,8 @@ class BumpTargetLeft extends RelocatableObject {
 
     this.scene.load.image("rollover_dark", "./sprites/rollover_dark.png");
     this.scene.load.image("rollover_lit", "./sprites/rollover_lit.png");
+    this.scene.load.audio("target", "./sounds/lokif_gui/sharp_echo.wav");
+
   }
 
   create () {
@@ -72,10 +74,16 @@ class BumpTargetLeft extends RelocatableObject {
         this.reset();
       }
     });
+
+    this.sfx = [
+      this.scene.sound.add("rollover")
+    ]
   }
 
   ignite () {
     this.target_obj.setTexture("target_lit");
+    this.sfx[Math.floor(Math.random() * this.sfx.length)].play();
+
     this.last_bump = Date.now();
     let loc = this.getLoc();
 

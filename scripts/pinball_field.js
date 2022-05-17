@@ -51,6 +51,7 @@ class FieldBorder extends RelocatableObject {
 class PinballField extends RelocatableObject {
   constructor(parent, x, y, width, height) {
     super(parent, x, y);
+    this.start = this.start.bind(this);
     this.width = width;
     this.height = height;
     this.border_size = 25;
@@ -70,6 +71,10 @@ class PinballField extends RelocatableObject {
         this.objects[key].reset();
       }
     });
+  }
+
+  start () {
+    this.balls.forEach( (ball) => ball.start());
   }
 
   init () {

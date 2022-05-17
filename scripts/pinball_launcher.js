@@ -14,7 +14,8 @@ class Launcher extends RelocatableObject {
       this.y = y;
       this.width = 28;
       this.pinSize = 2;
-      this.mass = 10;
+      this.mass = 6;
+      this.spring_power = 0.5;
       this.hammerWidth = this.width - (this.pinSize*4)
       this.state = this.fsmFree;
       this.event = this.Events.RELEASED;
@@ -36,14 +37,14 @@ class Launcher extends RelocatableObject {
         {x: this.x+(this.width/2)-(this.pinSize*2), y: this.y }
       ].map( (loc) => this.scene.add.circle(loc.x, loc.y, this.pinSize, 0x888888))
        .map( (mdl) => this.scene.matter.add.gameObject(mdl))
-       .map( (obj) => obj.setStatic(true).setFriction(0));
+       .map( (obj) => obj.setStatic(true).setFriction(0).setBounce(0));
   
       /* Create a hammer to hit the ball with */
       this.hammer = [
         { x: this.x, y: this.y }
       ].map( (loc) => this.scene.add.circle(loc.x, loc.y, this.hammerWidth/2, 0x3333aa))
       .map( (mdl) => this.scene.matter.add.gameObject(mdl) )
-      .map( (obj) => obj.setMass(this.mass).setFriction(0) );
+      .map( (obj) => obj.setMass(this.mass).setFriction(0).setFixedRotation() );
   
       /* Create two constraints on the hammer to pins to create the spring */
       this.springs = this.pins
@@ -52,7 +53,7 @@ class Launcher extends RelocatableObject {
             this.hammer[0],   /* Object A */
             pin,              /* Object B */
             this.width/4,       /* Length */
-            0.95               /* Stiffness 0 soft => 1 hard */
+            this.spring_power   /* Stiffness 0 soft => 1 hard */
           )
         );
   
@@ -80,7 +81,7 @@ class Launcher extends RelocatableObject {
           y: this.y+(this.width*2),
           duration: 1000
         });
-  
+
         this.state = this.fsmPulling;
       }
     }
@@ -119,6 +120,7 @@ class Launcher extends RelocatableObject {
     update () {
       super.update();
       this.state();
+      //this.guard[0].angle = (this.guard[0].angle - 6) % 360;
     }
   
     pull () {

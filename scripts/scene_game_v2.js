@@ -30,6 +30,7 @@ class GroupManager extends RelocatableObject {
         console.log("Group " + data.grp + " completed!");
         setTimeout(() => {
             this.scene.q(ControlEvents.GROUP_COMPLETE, { grp: data.grp });
+            this.sfx[Math.floor(Math.random() * this.sfx.length)].play();
         }, 200);
       }
     })
@@ -39,9 +40,17 @@ class GroupManager extends RelocatableObject {
     })
   }
 
+  preload () {
+    super.preload();
+    this.scene.load.audio("group", "./sounds/lokif_gui/positive.wav");
+
+  }
+
   create () {
     super.create();
-
+    this.sfx = [
+      this.scene.sound.add("group")
+    ]
   }
 }
 
@@ -102,6 +111,7 @@ class SceneGameV2 extends BasicScene {
     let mdl = getModel();
     mdl.game_ctx.time_remaining = 99 * 1000;
     this.objects.playerCtrl.listen(this.dispatch);
+    this.game_start = false;
   }
 
   dispatch (uiEvent, data) {
@@ -114,6 +124,8 @@ class SceneGameV2 extends BasicScene {
 
   preload () {
     super.preload();
+    this.load.audio("round_one", "./sounds/announcer/round_one.wav");
+    this.load.audio("fight", "./sounds/announcer/fight.wav");
   }
 
   create () {
@@ -131,14 +143,29 @@ class SceneGameV2 extends BasicScene {
     this.objects.right_name.justify(true);
 
     this.objects.left_health.justify(true);
+
+    this.round_sfx = this.sound.add("round_one");
+    this.fight_sfx = this.sound.add("fight");
+
+    this.round_sfx.once("complete", () => this.fight_sfx.play());
+    this.fight_sfx.once("complete", () => {
+      this.game_start = true
+      this.objects["left_field"].start();
+      this.objects["right_field"].start();
+    });
+    this.round_sfx.play();
+
   }
 
   update () {
     super.update();
-    getModel().game_ctx.time_remaining -= this.delta_ms;
 
-    if (getModel().game_ctx.time_remaining <= 0) {
-      this.scene.start("SceneContinue");
+    if (this.game_start) {
+      getModel().game_ctx.time_remaining -= this.delta_ms;
+
+      if (getModel().game_ctx.time_remaining <= 0) {
+        this.scene.start("SceneContinue");
+      }
     }
 
     this.objects.left_health.setHealth(getModel().game_ctx.players[0].health);

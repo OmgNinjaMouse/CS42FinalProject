@@ -22,7 +22,7 @@ class DialogPortrait extends BasicObject {
     this.obj.setPosition(this.x, this.y);
     let key = "dialog_"+this.x;
     this.portrait = this.scene.add.sprite(this.x, this.y, key);
-
+    this.portrait.setDepth(2);
   }
 
   setPosition (x, y) {

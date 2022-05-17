@@ -38,11 +38,17 @@ class Bumper extends RelocatableObject {
         this.circle.fillColor = blend_color;
       }
     })
+
+    this.sfx[Math.floor(Math.random() * this.sfx.length)].play();
   }
 
   reset () {
     this.ball.setPosition(this.start_x, this.start_y);
     this.ball.setVelocity(0,0);
+  }
+
+  preload () {
+    this.scene.load.audio("bump", "./sounds/lokif_gui/negative.wav");
   }
 
   create () {
@@ -60,6 +66,10 @@ class Bumper extends RelocatableObject {
       console.log("Bumper Hit!");
       this.bump();
     });
+    this.sfx = [
+      this.scene.sound.add("bump")
+    ]
+
     return this;
   }
 }

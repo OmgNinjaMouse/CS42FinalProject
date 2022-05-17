@@ -16,6 +16,7 @@ class Rollover extends RelocatableObject {
     super.preload();
     this.scene.load.image("rollover_dark", "./sprites/rollover_dark.png");
     this.scene.load.image("rollover_lit", "./sprites/rollover_lit.png");
+    this.scene.load.audio("rollover", "./sounds/lokif_gui/misc_menu_2.wav");
 
   }
 
@@ -41,9 +42,15 @@ class Rollover extends RelocatableObject {
         this.reset();
       }
     });
+
+    this.sfx = [
+      this.scene.sound.add("rollover")
+    ]
   }
 
   ignite () {
+    this.sfx[Math.floor(Math.random() * this.sfx.length)].play();
+
     if (this.lit == false) {
       this.lit = true;
       this.marker.setTexture("rollover_lit");

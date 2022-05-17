@@ -30,6 +30,8 @@ class SlingshotLeft extends RelocatableObject {
   preload () {
     this.scene.load.image(this.key, this.image_fn);
     this.scene.load.json(this.key + "_trace", this.shape_fn);
+    this.scene.load.audio("sling", "./sounds/lokif_gui/misc_menu_3.wav");
+
   }
 
   create () {
@@ -92,12 +94,18 @@ class SlingshotLeft extends RelocatableObject {
 
     /* The spring constraint applies the force onto the hammer */
     this.spring = this.scene.matter.add.constraint(this.hammer_obj, this.actuator, 0, 0.6);
+
+    /* Sound effect */
+    this.sfx = [
+      this.scene.sound.add("sling")
+    ]
   }
 
   bump () {
     this.scene.matter.world.removeConstraint(this.resetPin);
     this.debounce = true;
     this.last_bump = Date.now();
+    this.sfx[Math.floor(Math.random() * this.sfx.length)].play();
   }
 
   update () {

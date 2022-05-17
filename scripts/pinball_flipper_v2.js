@@ -53,12 +53,15 @@ class FlipperV2 extends RelocatableObject {
         )
       }
     });
+
+    this.sfx[Math.floor(Math.random() * this.sfx.length)].play();
   }
 
   preload () {
     super.preload();
     this.scene.load.image("flippy", "./sprites/flipper.png");
-
+    this.scene.load.audio("click_one", "./sounds/lokif_gui/click.wav");
+    this.scene.load.audio("click_two", "./sounds/lokif_gui/click_2.wav");
   }
 
   create () {
@@ -131,6 +134,12 @@ class FlipperV2 extends RelocatableObject {
       pointA: new Phaser.Math.Vector2(lever_offset, 0),
       pointB: new Phaser.Math.Vector2()
     });
+
+    /* Sound effects */
+    this.sfx = [
+      this.scene.sound.add("click_one", { volume: 4 }),
+      this.scene.sound.add("click_two", { volume: 4 })
+    ]
 
     return this;
   }
