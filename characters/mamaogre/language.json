@@ -1,0 +1,17 @@
+{
+  "taunt": [
+    { "txt": "The sandwiches are mine.", "wav": "characters/mamaogre/taunt_0.wav" }
+  ],
+  "victory": [
+
+  ],
+  "failure": [
+
+  ],
+  "attack": [
+
+  ],
+  "defend": [
+
+  ]
+}

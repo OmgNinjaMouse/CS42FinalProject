@@ -34,12 +34,17 @@ class SceneTitle extends BasicScene {
       switch (event.code) {
           case "Backslash":
             
+
             this.load.json("field", getModel().game_ctx.level_fn);
+            this.load.json("p1_lang", getModel().game_ctx.players[0].language_fn);
+            this.load.json("p2_lang", getModel().game_ctx.players[1].language_fn);
             this.load.once(Phaser.Loader.Events.COMPLETE, () => {
               console.log("Level JSON loaded.");
               let ctx = getModel().game_ctx;
               ctx.level = this.cache.json.get('field');
-              this.scene.start("SceneGameV2");
+              getModel().game_ctx.players[0].language = this.cache.json.get("p1_lang");
+              getModel().game_ctx.players[1].language = this.cache.json.get("p2_lang");
+              this.scene.start("SceneDialog");
             });
             this.load.start();
             

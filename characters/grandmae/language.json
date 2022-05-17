@@ -1,0 +1,17 @@
+{
+  "taunt": [
+    { "txt": "You're nothing that a fireball can't fix.", "wav": "characters/grandmae/taunt_0.wav" }
+  ],
+  "victory": [
+
+  ],
+  "failure": [
+
+  ],
+  "attack": [
+
+  ],
+  "defend": [
+
+  ]
+}

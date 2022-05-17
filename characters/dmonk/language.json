@@ -1,0 +1,17 @@
+{
+  "taunt": [
+    { "txt": "You didn't offer me a drink?  How Rude!", "wav": "characters/dmonk/taunt_0.wav" }
+  ],
+  "victory": [
+
+  ],
+  "failure": [
+
+  ],
+  "attack": [
+
+  ],
+  "defend": [
+
+  ]
+}

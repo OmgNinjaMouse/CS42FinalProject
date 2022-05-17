@@ -2,8 +2,17 @@
 class DialogPortrait extends BasicObject {
   constructor(parent, x, y) {
     super(parent);
+    this.setPosition = this.setPosition.bind(this);
+    this.setImage = this.setImage.bind(this);
     this.x = x;
     this.y = y;
+  }
+
+  preload () {
+    super.preload();
+    let key = "dialog_"+this.x;
+    console.log("Loading " + this.image_fn + " as " + key);
+    this.scene.load.image(key, this.image_fn);
   }
 
   create () {
@@ -11,18 +20,28 @@ class DialogPortrait extends BasicObject {
     this.rect = this.scene.add.rexRoundRectangle(0,0,128,128,12, 0x00ff00, 1);
     this.obj = this.scene.physics.add.existing(this.rect);
     this.obj.setPosition(this.x, this.y);
+    let key = "dialog_"+this.x;
+    this.portrait = this.scene.add.sprite(this.x, this.y, key);
+
   }
 
   setPosition (x, y) {
     this.x = x;
     this.y = y;
-    this.obj.setPosition(this.x, this.y);
+    if (this.obj != undefined) {
+      this.obj.setPosition(this.x, this.y);
+    }
+  }
+
+  setImage (image_fn) {
+    this.image_fn = image_fn;
   }
 }
 
 class DialogTextBubble extends BasicObject {
   constructor(parent, x, y, msg) {
     super(parent);
+    this.setMsg = this.setMsg.bind(this);
     this.x = x;
     this.y = y;
     this.msg = msg;
@@ -37,19 +56,29 @@ class DialogTextBubble extends BasicObject {
     this.playing = false;
   }
 
+  preload () {
+    super.preload();
+    let key = "lang_"+this.x;
+  }
+
   create () {
     this.rect = this.scene.add.rexRoundRectangle(0,0,600,128,12, 0x0000ff, 1);
     this.obj = this.scene.physics.add.existing(this.rect);
     this.obj.setPosition(this.x, this.y);
-
-    this.text = this.scene.add.text(this.x, this.y, "");
+    this.text = this.scene.add.text(this.x-200, this.y, "");
   }
 
   setPosition (x, y) {
     this.x = x;
     this.y = y;
-    this.obj.setPosition(this.x, this.y);
-    this.text.setPosition(this.x, this.y);
+    if (this.obj != undefined) {
+      this.obj.setPosition(this.x, this.y);
+      this.text.setPosition(this.x, this.y);
+    }
+  }
+
+  setMsg (msg) {
+    this.msg = msg;
   }
 
   play (callback) {
@@ -77,20 +106,43 @@ class DialogCharLeft extends BasicObject {
   constructor(parent) {
     super(parent);
     this.addObject("pic", new DialogPortrait(this, 128, 128));
-    this.addObject("txt", new DialogTextBubble(this, 450, 200, "Blah blah blah blah"));
+    this.addObject("txt", new DialogTextBubble(this, 450, 200, "Blah blah blah"));
     this.pic_loc = { x: 128, y: 128 };
     this.dialog_loc = { x: 450, y: 200};
     this.play = this.play.bind(this);
+    this.player_id = 0;
+  }
+
+  init () {
+    super.init();
+    this.objects.pic.setPosition(this.pic_loc.x, this.pic_loc.y);
+    this.objects.txt.setPosition(this.dialog_loc.x, this.dialog_loc.y);
+
+    this.portrait_fn = getModel().game_ctx.players[this.player_id].portrait;
+    this.objects.pic.setImage(this.portrait_fn);
+
+    let msg_idx = Math.floor(getModel().game_ctx.players[this.player_id].language.taunt.length * Math.random());
+    this.msg = getModel().game_ctx.players[this.player_id].language.taunt[msg_idx];
+    this.objects.txt.setMsg(this.msg.txt);
+  }
+
+  preload () {
+    super.preload();
+    if (this.msg.wav != undefined) {
+      this.scene.load.audio("wav_"+this.pic_loc.x, this.msg.wav);
+    }
   }
 
   create () {
     super.create();
-    this.objects.pic.setPosition(this.pic_loc.x, this.pic_loc.y);
-    this.objects.txt.setPosition(this.dialog_loc.x, this.dialog_loc.y);
   }
 
   play (callback) {
     this.objects.txt.play(callback);
+
+    if (this.msg.wav != undefined) {
+      this.scene.sound.add("wav_"+this.pic_loc.x).play();
+    }
   }
 }
 
@@ -99,6 +151,11 @@ class DialogCharRight extends DialogCharLeft {
     super(parent);
     this.pic_loc = { x: 850, y: 325 };
     this.dialog_loc = { x: 530, y: 397};
+    this.player_id = 1;
+  }
+
+  init () {
+    super.init();
   }
 }
 

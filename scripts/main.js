@@ -36,61 +36,23 @@ const init_model = {
         name: "Princess",
         key: "princess",
         health: 100,
-        spritesheet: "./characters/princess/spritesheet.png"
+        spritesheet: "./characters/princess/spritesheet.png",
+        portrait: "./characters/princess/portrait.png",
+        language_fn: "./characters/princess/language.json",
+        language: {}
       },
       {
         name: "Bad Wolf",
         key: "badwolf",
         health: 100,
-        spritesheet: "./characters/badwolf/spritesheet.png"
+        spritesheet: "./characters/badwolf/spritesheet.png",
+        portrait: "./characters/badwolf/portrait.png",
+        language_fn: "./characters/badwolf/language.json",
+        language: {}
       }
     ],
     level_fn: "characters/princess/pinball.json",
-    level: {
-      /**
-      ball: [
-        { x: 270, y: 300 }
-      ],
-
-      launcher: [
-        { x: 270, y: 360 }
-      ],
-      flippers: [
-        { x: 80, y: 348, dir: "left" },
-        { x: 220, y: 348, dir: "right" }
-      ],
-      slingshot: [
-        { x: 60, y: 266, dir: "left" },
-        { x: 235, y: 266, dir: "right" },
-      ],
-      rails: [
-        { x1: 0, y1: 320, x2: 80, y2: 340 },
-        { x1: 250, y1: 320, x2: 220, y2: 340 },
-        { x1: 250, y1: 0, x2: 300, y2: 40 },
-        { x1: 160, y1: 0, x2: 140, y2: 50 },
-      ],
-      wires: [
-        { x1: 150, y1: 65, x2: 150, y2: 95 },
-        { x1: 185, y1: 65, x2: 185, y2: 95 },
-        { x1: 220, y1: 65, x2: 220, y2: 95 },
-        { x1: 255, y1: 65, x2: 255, y2: 95 }
-      ],
-      bumpers: [
-        { x: 60, y: 50 },
-        { x: 110, y: 70 },
-        { x: 60, y: 100 }
-      ],
-      rollover: [
-        { x: 167,    y: 75, gid: "tunnels" },
-        { x: 185+17, y: 75, gid: "tunnels" },
-        { x: 220+17, y: 75, gid: "tunnels" }
-      ],
-      targets: [
-        { x: 20, y: 180, dir: "left", gid: "sidebar" },
-        { x: 20, y: 140, dir: "left", gid: "sidebar" }
-      ],
-      **/
-    }
+    level: { }
   }
 }
 

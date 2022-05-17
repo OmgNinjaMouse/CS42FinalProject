@@ -323,20 +323,28 @@ class SceneSelect extends BasicScene {
               name: p1_char.name,
               key: p1_char.key,
               health: 100,
-              spritesheet: p1_char.sprites
+              spritesheet: p1_char.sprites,
+              portrait: p1_char.portrait,
+              language_fn: p1_char.language
             }
             mdl[1] = {
               name: p2_char.name,
               key: p2_char.key,
               health: 100,
-              spritesheet: p2_char.sprites
+              spritesheet: p2_char.sprites,
+              portrait: p2_char.portrait,
+              language_fn: p2_char.language
             }
 
             this.load.json("field", getModel().game_ctx.level_fn);
+            this.load.json("p1_lang", getModel().game_ctx.players[0].language_fn);
+            this.load.json("p2_lang", getModel().game_ctx.players[1].language_fn);
             this.load.once(Phaser.Loader.Events.COMPLETE, () => {
               console.log("Level JSON loaded.");
               let ctx = getModel().game_ctx;
               ctx.level = this.cache.json.get('field');
+              getModel().game_ctx.players[0].language = this.cache.json.get("p1_lang");
+              getModel().game_ctx.players[1].language = this.cache.json.get("p2_lang");
               this.scene.start("SceneDialog");
             });
             this.load.start();

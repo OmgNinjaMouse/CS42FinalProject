@@ -1,0 +1,17 @@
+{
+  "taunt": [
+    { "txt": "This Kingdom is under my protection.", "wav": "characters/princess/taunt_0.wav" }
+  ],
+  "victory": [
+
+  ],
+  "failure": [
+
+  ],
+  "attack": [
+
+  ],
+  "defend": [
+
+  ]
+}
