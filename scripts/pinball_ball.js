@@ -21,6 +21,10 @@ class BallV2 extends RelocatableObject {
     return {x: this.ball.x, y: this.ball.y };
   }
 
+  getVelocity () {
+    return this.ball.body.velocity;
+  }
+
   preload () {
     super.preload();
     this.scene.load.image("ball", "./sprites/ball.png");

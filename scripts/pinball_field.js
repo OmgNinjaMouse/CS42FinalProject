@@ -48,12 +48,18 @@ class FieldBorder extends RelocatableObject {
 
 }
 
+function round2 (in_number) {
+  return Math.round(in_number * 100) / 100;
+}
+
 class PinballField extends RelocatableObject {
   constructor(parent, x, y, width, height) {
     super(parent, x, y);
     this.start = this.start.bind(this);
     this.setScoreCb = this.setScoreCb.bind(this);
     this.handleChildEvent = this.handleChildEvent.bind(this);
+    this.getStatus = this.getStatus.bind(this);
+
     this.width = width;
     this.height = height;
     this.border_size = 25;
@@ -75,6 +81,34 @@ class PinballField extends RelocatableObject {
     });
   }
 
+  getStatus () {
+    let log = {
+      ball_x: round2(this.balls[0].getPosition().x),
+      ball_y: round2(this.balls[0].getPosition().y),
+      ball_vx: round2(this.balls[0].getVelocity().x),
+      ball_vy: round2(this.balls[0].getVelocity().y),
+      spring_y: round2(this.launchers[0].getPosition()),
+      flip_left: round2(this.flippers[0].getPosition()),
+      flip_right: round2(this.flippers[1].getPosition()),
+      events: this.event_reg,
+      user_left_flip_up: this.event_reg & (1<<ControlEvents.LEFT_FLIP_UP),
+      user_right_flip_up: this.event_reg & (1<<ControlEvents.RIGHT_FLIP_UP),
+      user_left_flip_dn: this.event_reg & (1<<ControlEvents.LEFT_FLIP_DN),
+      user_right_flip_dn: this.event_reg & (1<<ControlEvents.RIGHT_FLIP_DN),
+      user_pull: this.event_reg & (1<<ControlEvents.LAUNCH_PULL),
+      user_release: this.event_reg & (1<<ControlEvents.LAUNCH_RELEASE),
+      user_left_tilt: this.event_reg & (1<<ControlEvents.LEFT_TILT),
+      user_right_tilt: this.event_reg & (1<<ControlEvents.RIGHT_TILT),
+    }
+    this.event_reg = 0x0;
+    return log;
+  }
+
+  dispatch (event, data) {
+    super.dispatch(event, data);
+    this.event_reg = this.event_reg | (1 << event);
+  }
+
   start () {
     this.balls.forEach( (ball) => ball.start());
   }
@@ -84,7 +118,11 @@ class PinballField extends RelocatableObject {
   }
 
   init () {
+    this.event_reg = 0x0;
+
     this.balls = [];
+    this.launchers = [];
+    this.flippers = [];
 
     let level_mdl = getModel().game_ctx.level;
     if (Object.keys(level_mdl).length == 0) {
@@ -97,10 +135,12 @@ class PinballField extends RelocatableObject {
       this.balls.push(obj);
     });
     level_mdl.launcher.forEach( (spec, idx) => {
-      this.addObject("launch_" + idx, new Launcher(this, spec.x, spec.y));
+      let obj = this.addObject("launch_" + idx, new Launcher(this, spec.x, spec.y));
+      this.launchers.push(obj);
     });
     level_mdl.flippers.forEach( (spec, idx) => {
-      this.addObject("flip_"+idx, new FlipperV2(this, spec.x, spec.y, (spec.dir == "right")));
+      let obj = this.addObject("flip_"+idx, new FlipperV2(this, spec.x, spec.y, (spec.dir == "right")));
+      this.flippers.push(obj);
     });
     level_mdl.rails.forEach( (spec, idx) => {
       this.addObject("rail_"+idx, new WireRailV2(this, spec.x1, spec.y1, spec.x2, spec.y2));

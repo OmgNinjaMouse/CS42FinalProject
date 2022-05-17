@@ -9,6 +9,7 @@ class Launcher extends RelocatableObject {
       this.fsmFree = this.fsmFree.bind(this);
       this.fsmPulling = this.fsmPulling.bind(this);
       this.fsmLaunch = this.fsmLaunch.bind(this);
+      this.getPosition = this.getPosition.bind(this);
   
       this.x = x;
       this.y = y;
@@ -21,6 +22,10 @@ class Launcher extends RelocatableObject {
       this.event = this.Events.RELEASED;
     }
   
+    getPosition () {
+      return this.handle.y - this.y;
+    }
+
     create () {
       super.create();
       /* Build a channel.  Ball is 16 radius, so 32+margin */

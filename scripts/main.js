@@ -54,7 +54,8 @@ const init_model = {
     ],
     level_fn: "characters/princess/pinball.json",
     level: { }
-  }
+  },
+  history: []
 }
 
 class Model {

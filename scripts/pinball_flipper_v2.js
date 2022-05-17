@@ -4,6 +4,7 @@ class FlipperV2 extends RelocatableObject {
     super(parent, x, y);
     this.isRight = is_right;
     this.flip = this.flip.bind(this);
+    this.getPosition = this.getPosition.bind(this);
   }
 
   init () {
@@ -28,6 +29,10 @@ class FlipperV2 extends RelocatableObject {
     }
 
     return this;
+  }
+
+  getPosition () {
+    return this.tweener.x;
   }
 
   /* Flip is what actually moves the actuator.  

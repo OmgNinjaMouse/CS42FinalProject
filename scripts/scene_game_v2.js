@@ -130,6 +130,9 @@ class SceneGameV2 extends BasicScene {
       player.health = mdl.game_ctx.max_health;
     })
     this.game_start = false;
+
+    this.last_status = Date.now();
+    this.status_delay = 200;
   }
 
   dispatch (uiEvent, data) {
@@ -173,6 +176,8 @@ class SceneGameV2 extends BasicScene {
     });
     this.round_sfx.play();
 
+    getModel().history = [];
+
   }
 
   update () {
@@ -184,6 +189,11 @@ class SceneGameV2 extends BasicScene {
       if (getModel().game_ctx.time_remaining <= 0) {
         this.scene.start("SceneContinue");
       }
+    }
+
+    if (this.last_time > (this.last_status + this.status_delay)) {
+      this.last_status = this.last_time;
+      getModel().history.push(this.objects.left_field.getStatus());
     }
 
     getModel().game_ctx.players.forEach( (player, idx) => {
