@@ -106,6 +106,7 @@ class SlingshotLeft extends RelocatableObject {
     this.debounce = true;
     this.last_bump = Date.now();
     this.sfx[Math.floor(Math.random() * this.sfx.length)].play();
+    this.notify({type: "score", source: "slingshot"})
   }
 
   update () {

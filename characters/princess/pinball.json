@@ -47,10 +47,10 @@
   ],
   "score": {
     "slingshot": 2,
-    "bumpers": 10,
-    "rollover": 3,
-    "tunnels": 20,
-    "field": 10,
-    "channel": 10
+    "bumper": 3,
+    "rollover": 1,
+    "tunnels": 10,
+    "field": 5,
+    "channel": 5
   }
 }

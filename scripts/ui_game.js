@@ -32,8 +32,8 @@ class HealthBar extends RelocatableObject {
     console.log("Width:" + width);
     this.width = width;
     this.height = 30;
-    this.health = 100;
-    this.max_health = 100;
+    this.health = 200;
+    this.max_health = 200;
   }
 
   init () {
@@ -66,6 +66,13 @@ class HealthBar extends RelocatableObject {
   setHealth (health) {
     this.health = health;
     this.foreground.setSize((this.width*0.95)*(this.health/this.max_health), this.height*0.8);
+
+    if ((this.health/this.max_health) < 0.25) {
+      this.foreground.setFillStyle(0x663333, 1);
+    }
+    else if ((this.health/this.max_health) < 0.5) {
+      this.foreground.setFillStyle(0x666633, 1);
+    }
     this.justify(this.is_right);
   }
 }

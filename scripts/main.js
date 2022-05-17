@@ -31,11 +31,12 @@ const init_model = {
   },
   game_ctx: {
     time_remaining: 0,
+    max_health: 200,
     players: [
       {
         name: "Princess",
         key: "princess",
-        health: 100,
+        health: 200,
         spritesheet: "./characters/princess/spritesheet.png",
         portrait: "./characters/princess/portrait.png",
         language_fn: "./characters/princess/language.json",
@@ -44,7 +45,7 @@ const init_model = {
       {
         name: "Bad Wolf",
         key: "badwolf",
-        health: 100,
+        health: 200,
         spritesheet: "./characters/badwolf/spritesheet.png",
         portrait: "./characters/badwolf/portrait.png",
         language_fn: "./characters/badwolf/language.json",

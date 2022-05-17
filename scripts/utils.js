@@ -86,13 +86,23 @@ class RelocatableObject extends BasicObject {
     this.allObjects().forEach( (obj) => obj.dispatch(event, data));
     let keys = Object.keys(this.eventTbl);
     if (keys.includes(event.toString())) {
-      console.log("Handling " + event );
+      //console.log("Handling " + event );
       this.eventTbl[event.toString()](event, data);
     }
   }
 
   listen (event, callback) {
     this.eventTbl[event] = callback;
+  }
+
+  setNotify(callback) {
+    this.notify_cb = callback;
+  }
+
+  notify(data) {
+    if (this.notify_cb != undefined) {
+      this.notify_cb(data);
+    }
   }
 }
 

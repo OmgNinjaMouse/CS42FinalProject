@@ -40,6 +40,7 @@ class Bumper extends RelocatableObject {
     })
 
     this.sfx[Math.floor(Math.random() * this.sfx.length)].play();
+    this.notify({type:"score", source:"bumper" });
   }
 
   reset () {

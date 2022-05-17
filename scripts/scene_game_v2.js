@@ -31,6 +31,7 @@ class GroupManager extends RelocatableObject {
         setTimeout(() => {
             this.scene.q(ControlEvents.GROUP_COMPLETE, { grp: data.grp });
             this.sfx[Math.floor(Math.random() * this.sfx.length)].play();
+            this.notify({type: "score", source: data.grp})
         }, 200);
       }
     })
@@ -104,6 +105,19 @@ class SceneGameV2 extends BasicScene {
     this.addObject("stage", new CharacterStage(this, (side_margin*2)+field_width+10, screen_height/2, screen_width-(field_width*2)-(side_margin*3)));
 
     this.addObject("playerCtrl", new GameController(this, 0, 0));
+
+    this.objects.left_field.setScoreCb( (data) => {
+      console.log("Left score - source:" + data.source + " points:" + data.value);
+      getModel().game_ctx.players[0].health += (data.value / 2);
+      getModel().game_ctx.players[1].health -= data.value;
+    });
+
+    this.objects.right_field.setScoreCb( (data) => {
+      console.log("Right score - source:" + data.source + " points:" + data.value);
+      getModel().game_ctx.players[0].health -= data.value;
+      getModel().game_ctx.players[1].health += (data.value / 2);
+    });
+
   }
   
   init () {
@@ -111,6 +125,10 @@ class SceneGameV2 extends BasicScene {
     let mdl = getModel();
     mdl.game_ctx.time_remaining = 99 * 1000;
     this.objects.playerCtrl.listen(this.dispatch);
+
+    getModel().game_ctx.players.forEach( (player) => {
+      player.health = mdl.game_ctx.max_health;
+    })
     this.game_start = false;
   }
 
@@ -167,6 +185,16 @@ class SceneGameV2 extends BasicScene {
         this.scene.start("SceneContinue");
       }
     }
+
+    getModel().game_ctx.players.forEach( (player, idx) => {
+      if (player.health > 200) {
+        player.health = 200;
+      }
+
+      if (player.health < 0) {
+        this.scene.start("SceneContinue");
+      }
+    })
 
     this.objects.left_health.setHealth(getModel().game_ctx.players[0].health);
     this.objects.right_health.setHealth(getModel().game_ctx.players[1].health);

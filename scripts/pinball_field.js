@@ -52,6 +52,8 @@ class PinballField extends RelocatableObject {
   constructor(parent, x, y, width, height) {
     super(parent, x, y);
     this.start = this.start.bind(this);
+    this.setScoreCb = this.setScoreCb.bind(this);
+    this.handleChildEvent = this.handleChildEvent.bind(this);
     this.width = width;
     this.height = height;
     this.border_size = 25;
@@ -75,6 +77,10 @@ class PinballField extends RelocatableObject {
 
   start () {
     this.balls.forEach( (ball) => ball.start());
+  }
+
+  setScoreCb (score_cb) {
+    this.reportScore = score_cb;
   }
 
   init () {
@@ -142,6 +148,17 @@ class PinballField extends RelocatableObject {
 
   create () {
     super.create();
+    this.allObjects().forEach( obj => obj.setNotify(this.handleChildEvent));
+  }
+
+  handleChildEvent (data) {
+    if (data.type == "score") {
+      let score_tbl = getModel().game_ctx.level.score;
+      if (Object.keys(score_tbl).includes(data.source)) {
+        let value = score_tbl[data.source];
+        this.reportScore({ ...data, value: value});
+      }
+    }
   }
 
   update () {

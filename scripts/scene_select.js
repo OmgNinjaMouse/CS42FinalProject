@@ -322,7 +322,7 @@ class SceneSelect extends BasicScene {
             mdl[0] = {
               name: p1_char.name,
               key: p1_char.key,
-              health: 100,
+              health: 200,
               spritesheet: p1_char.sprites,
               portrait: p1_char.portrait,
               language_fn: p1_char.language
@@ -330,7 +330,7 @@ class SceneSelect extends BasicScene {
             mdl[1] = {
               name: p2_char.name,
               key: p2_char.key,
-              health: 100,
+              health: 200,
               spritesheet: p2_char.sprites,
               portrait: p2_char.portrait,
               language_fn: p2_char.language

@@ -50,6 +50,7 @@ class Rollover extends RelocatableObject {
 
   ignite () {
     this.sfx[Math.floor(Math.random() * this.sfx.length)].play();
+    this.notify({type: "score", source: "rollover"})
 
     if (this.lit == false) {
       this.lit = true;
