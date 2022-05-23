@@ -13,7 +13,7 @@
       "key": "badwolf",
       "portrait": "characters/badwolf/portrait.png",
       "sprites": "characters/badwolf/spritesheet.png",
-      "level": "characters/princess/pinball.json",
+      "level": "characters/badwolf/pinball.json",
       "language": "characters/badwolf/language.json"
     },
     {
@@ -21,7 +21,7 @@
       "key": "dmonk",
       "portrait": "characters/dmonk/portrait.png",
       "sprites": "characters/dmonk/spritesheet.png",
-      "level": "characters/princess/pinball.json",
+      "level": "characters/dmonk/pinball.json",
       "language": "characters/dmonk/language.json"
     },
     {
@@ -29,7 +29,7 @@
       "key": "banditrob",
       "portrait": "characters/banditrob/portrait.png",
       "sprites": "characters/banditrob/spritesheet.png",
-      "level": "characters/princess/pinball.json",
+      "level": "characters/banditrob/pinball.json",
       "language": "characters/banditrob/language.json"
     },
     {
@@ -45,7 +45,7 @@
       "key": "mamaogre",
       "portrait": "characters/mamaogre/portrait.png",
       "sprites": "characters/mamaogre/spritesheet.png",
-      "level": "characters/princess/pinball.json",
+      "level": "characters/badwolf/pinball.json",
       "language": "characters/mamaogre/language.json"
     },
     {
@@ -53,7 +53,7 @@
       "key": "grandmae",
       "portrait": "characters/grandmae/portrait.png",
       "sprites": "characters/grandmae/spritesheet.png",
-      "level": "characters/princess/pinball.json",
+      "level": "characters/dmonk/pinball.json",
       "language": "characters/grandmae/language.json"
     },
     {
@@ -61,7 +61,7 @@
       "key": "woodsman",
       "portrait": "characters/woodsman/portrait.png",
       "sprites": "characters/woodsman/spritesheet.png",
-      "level": "characters/princess/pinball.json",
+      "level": "characters/banditrob/pinball.json",
       "language": "characters/woodsman/language.json"
     }
   ]

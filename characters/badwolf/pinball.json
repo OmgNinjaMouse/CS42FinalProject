@@ -1,0 +1,57 @@
+{
+  "ball": [
+    { "x": 270, "y": 330 }
+  ],
+
+  "launcher": [
+    { "x": 270, "y": 360 }
+  ],
+  "flippers": [
+    { "x": 80, "y": 348, "dir": "left" },
+    { "x": 220, "y": 348, "dir": "right" }
+  ],
+  "slingshot": [
+    { "x": 20, "y": 100, "dir": "left" },
+    { "x": 280, "y": 100, "dir": "right" }    
+  ],
+  "rails": [
+    {"x1": 0, "y1": 320, "x2": 80, "y2": 340 },
+    {"x1": 245, "y1": 320, "x2": 220, "y2": 340 },
+    {"x1": 0, "y1": 250, "x2": 30, "y2":210},
+    {"x1": 300, "y1": 250, "x2": 270, "y2":210}
+  ],
+  "wires": [
+    {"x1": 90, "y1": 270, "x2": 90, "y2": 300},
+    {"x1": 50, "y1": 260, "x2": 50, "y2": 290}
+
+  ],
+  "bumpers": [
+    { "x": 100, "y": 40 },
+    { "x": 150, "y": 70 },
+    { "x": 200, "y": 40 }
+  ],
+  "rollover": [
+    { "x": 80, "y":  60, "gid": "field" },
+    { "x": 150, "y": 100, "gid": "field" },
+    { "x": 220, "y": 60, "gid": "field" },
+
+    { "x": 30, "y": 280, "gid": "tunnels" },
+    { "x": 70, "y": 280, "gid": "tunnels" }
+
+  ],
+  "targets": [
+    { "x": 20, "y": 180, "dir": "left", "gid": "sidebar" },
+    { "x": 20, "y": 140, "dir": "left", "gid": "sidebar" },
+    { "x": 280, "y": 180, "dir": "right", "gid": "sidebar" },
+    { "x": 280, "y": 140, "dir": "right", "gid": "sidebar" }
+  ],
+  "score": {
+    "slingshot": 2,
+    "bumper": 3,
+    "rollover": 1,
+    "target": 3,
+    "sidebar": 10,
+    "field": 5,
+    "tunnels": 5
+  }
+}

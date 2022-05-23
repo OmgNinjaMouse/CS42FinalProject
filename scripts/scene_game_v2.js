@@ -5,8 +5,10 @@ class GroupManager extends RelocatableObject {
   }
 
   init () {
+    this.side = this.parent.obj_key;
+
     this.listen(ControlEvents.REGISTER_GROUP, (event, data) => {
-      console.log("Group Register to " + data.grp + " by " + data.id);
+      console.log(this.side + " Group Register to " + data.grp + " by " + data.id);
       let group_list = Object.keys(this.groups);
       if (group_list.includes(data.grp) == false) {
         this.groups[data.grp] = {};
@@ -15,7 +17,7 @@ class GroupManager extends RelocatableObject {
     });
 
     this.listen(ControlEvents.GROUP_UPDATE, (event, data) => {
-      console.log("Group Update to " + data.grp + " by " + data.id );
+      console.log(this.side + " Group Update to " + data.grp + " by " + data.id );
       this.groups[data.grp][data.id] = { state: true };
       let status = Object.keys(this.groups[data.grp])
         .map( (obj_id) => this.groups[data.grp][obj_id])
@@ -27,9 +29,9 @@ class GroupManager extends RelocatableObject {
         }, { lit: 0, count: 0 })
       
       if (status.lit == status.count) {
-        console.log("Group " + data.grp + " completed!");
+        console.log(this.side + " Group " + data.grp + " completed!");
         setTimeout(() => {
-            this.scene.q(ControlEvents.GROUP_COMPLETE, { grp: data.grp });
+            this.scene.q(ControlEvents.GROUP_COMPLETE, { side: this.parent.obj_key, grp: data.grp });
             this.sfx[Math.floor(Math.random() * this.sfx.length)].play();
             this.notify({type: "score", source: data.grp})
         }, 200);
@@ -63,7 +65,7 @@ class SceneGameV2 extends BasicScene {
       physics: {
           default: 'matter',
           matter: {
-              debug: true,
+              debug: false,
           }
       }
 
@@ -136,7 +138,12 @@ class SceneGameV2 extends BasicScene {
   }
 
   dispatch (uiEvent, data) {
-    this.objects["left_field"].dispatch(uiEvent, data);
+    let side = "left_field"
+    if (data.side != undefined) {
+      side = data.side;
+    }
+
+    this.objects[side].dispatch(uiEvent, data);
   }
 
   q (uiEvent, data) {
@@ -206,6 +213,7 @@ class SceneGameV2 extends BasicScene {
       }
     })
 
+    this.objects.stage.setHealth(getModel().game_ctx.players[0].health, getModel().game_ctx.players[0].health);
     this.objects.left_health.setHealth(getModel().game_ctx.players[0].health);
     this.objects.right_health.setHealth(getModel().game_ctx.players[1].health);
   }

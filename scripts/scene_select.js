@@ -173,7 +173,7 @@ class SelectGallery extends BasicObject {
     for (let i=0; i<this.num_chars; i++) {
       let col = i % this.chars_per_row;
       let row = Math.floor(i / this.chars_per_row);
-      let center_x = getModel().config.width / 2;
+      let center_x = (getModel().config.width / 2) + 35;
       let start_y = getModel().config.height * 0.75;
       let x = center_x + (this.sprite_width * (col - 2));
       let y = start_y + (this.sprite_width * row);
@@ -259,8 +259,12 @@ class SceneSelect extends BasicScene {
     this.choiceMade = this.choiceMade.bind(this);
     this.fsm = this.fsm.bind(this);
 
+    this.addObject("title", new MainTitle(this, 960/2, 50, "Player Select"))
+    this.addObject("subtitle", new SubTitle(this, 960/2, 200, "VS"))
     this.addObject("gallery", new SelectGallery(this));
     this.addObject("bgm",       new BgmAgent(this));
+    this.addObject("left_name", new Nameplate(this, 200,500));
+    this.addObject("right_name", new Nameplate(this, 760,500)).justify(true);
   }
 
   init () {
@@ -299,6 +303,7 @@ class SceneSelect extends BasicScene {
             console.log("Player One has chosen: " + character_id);
             this.state = SelectStates.PLAYER_TWO_WAITING;
             this.player_one = character_id;
+            this.objects.left_name.setName(this.characters.characters[this.player_one].name);
             this.objects.gallery.selectRandom();
             break;
         }
@@ -308,6 +313,8 @@ class SceneSelect extends BasicScene {
           case SelectEvents.SELECTION_MADE:
             console.log("Player Two has chosen: " + character_id);
             this.player_two = character_id;
+            this.objects.right_name.setName(this.characters.characters[this.player_two].name);
+
             this.state = SelectStates.DISPLAY;
             break;
         }
@@ -336,15 +343,17 @@ class SceneSelect extends BasicScene {
               language_fn: p2_char.language
             }
 
-            this.load.json("field", getModel().game_ctx.level_fn);
-            this.load.json("p1_lang", getModel().game_ctx.players[0].language_fn);
-            this.load.json("p2_lang", getModel().game_ctx.players[1].language_fn);
+            getModel().game_ctx.level_fn = p2_char.level;
+
+            this.load.json("field"+p2_char.name, getModel().game_ctx.level_fn);
+            this.load.json("p1_lang"+p1_char.name, getModel().game_ctx.players[0].language_fn);
+            this.load.json("p2_lang"+p2_char.name, getModel().game_ctx.players[1].language_fn);
             this.load.once(Phaser.Loader.Events.COMPLETE, () => {
-              console.log("Level JSON loaded.");
+              console.log("Level JSON loaded from " + getModel().game_ctx.level_fn);
               let ctx = getModel().game_ctx;
-              ctx.level = this.cache.json.get('field');
-              getModel().game_ctx.players[0].language = this.cache.json.get("p1_lang");
-              getModel().game_ctx.players[1].language = this.cache.json.get("p2_lang");
+              ctx.level = this.cache.json.get('field'+p2_char.name);
+              getModel().game_ctx.players[0].language = this.cache.json.get("p1_lang"+p1_char.name);
+              getModel().game_ctx.players[1].language = this.cache.json.get("p2_lang"+p2_char.name);
               this.scene.start("SceneDialog");
             });
             this.load.start();

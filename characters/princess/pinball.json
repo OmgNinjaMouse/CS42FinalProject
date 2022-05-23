@@ -49,6 +49,7 @@
     "slingshot": 2,
     "bumper": 3,
     "rollover": 1,
+    "target": 1,
     "tunnels": 10,
     "field": 5,
     "channel": 5

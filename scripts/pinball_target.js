@@ -26,7 +26,7 @@ class BumpTargetLeft extends RelocatableObject {
     this.scene.load.image("rollover_dark", "./sprites/rollover_dark.png");
     this.scene.load.image("rollover_lit", "./sprites/rollover_lit.png");
     this.scene.load.audio("target", "./sounds/lokif_gui/sharp_echo.wav");
-
+    this.scene.load.audio("rollover", "./sounds/lokif_gui/misc_menu_2.wav");
   }
 
   create () {
@@ -68,7 +68,7 @@ class BumpTargetLeft extends RelocatableObject {
     });
 
     /* Group Interface */
-    this.scene.q(ControlEvents.REGISTER_GROUP, { grp: this.gid, id: this.obj_key });
+    this.scene.q(ControlEvents.REGISTER_GROUP, { side: this.parent.obj_key, grp: this.gid, id: this.obj_key });
     this.listen(ControlEvents.GROUP_COMPLETE, (event, data) => {
       if (data.grp == this.gid) {
         this.reset();
@@ -103,7 +103,7 @@ class BumpTargetLeft extends RelocatableObject {
     if (this.lit == false) {
       this.lit = true;
       this.marker.setTexture("rollover_lit");
-      this.scene.q(ControlEvents.GROUP_UPDATE, { grp: this.gid, id: this.obj_key });
+      this.scene.q(ControlEvents.GROUP_UPDATE, { side: this.parent.obj_key, grp: this.gid, id: this.obj_key });
     }
 
 
@@ -112,7 +112,7 @@ class BumpTargetLeft extends RelocatableObject {
   reset () {
     this.lit = false;
     this.marker.setTexture("rollover_dark");
-    this.scene.q(ControlEvents.GROUP_CLEAR, { grp: this.gid, id: this.obj_key });
+    this.scene.q(ControlEvents.GROUP_CLEAR, { side: this.parent.obj_key, grp: this.gid, id: this.obj_key });
   }
 
   update () {

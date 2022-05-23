@@ -3,6 +3,10 @@ class CharacterStage extends RelocatableObject {
   constructor(parent, x, y, width) {
     super(parent, x,y);
     this.width = width;
+    this.last_left_health = 200;
+    this.last_right_health = 200;
+    this.current_left_health = 200;
+    this.current_right_health = 200;
   }
 
   init() {
@@ -19,6 +23,21 @@ class CharacterStage extends RelocatableObject {
   create () {
     super.create();
     this.refreshLoc();
+  }
+
+  setHealth(left_health, right_health) {
+    this.current_left_health = left_health;
+    this.current_right_health = right_health;
+  }
+
+  update () {
+    /* Every 1 sec, perform a DPS check */
+    /* Pick animation based on DPS */
+    /*    weak */
+    /*    medium */
+    /*    heavy */
+
+    /* Effects sprites? */
   }
 }
 

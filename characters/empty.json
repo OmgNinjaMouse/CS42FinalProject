@@ -1,0 +1,36 @@
+{
+  "ball": [
+    { "x": 270, "y": 330 }
+  ],
+
+  "launcher": [
+    { "x": 270, "y": 360 }
+  ],
+  "flippers": [
+    { "x": 80, "y": 348, "dir": "left" },
+    { "x": 220, "y": 348, "dir": "right" }
+  ],
+  "slingshot": [
+  ],
+  "rails": [
+    { "x1": 0, "y1": 320, "x2": 80, "y2": 340 },
+    { "x1": 245, "y1": 320, "x2": 220, "y2": 340 }
+  ],
+  "wires": [
+  ],
+  "bumpers": [
+  ],
+  "rollover": [
+  ],
+  "targets": [
+  ],
+  "score": {
+    "slingshot": 2,
+    "bumper": 3,
+    "rollover": 1,
+    "target": 1,
+    "tunnels": 10,
+    "field": 5,
+    "channel": 5
+  }
+}

@@ -36,7 +36,7 @@ class Rollover extends RelocatableObject {
       this.ignite();
     });
 
-    this.scene.q(ControlEvents.REGISTER_GROUP, { grp: this.gid, id: this.obj_key });
+    this.scene.q(ControlEvents.REGISTER_GROUP, { side: this.parent.obj_key, grp: this.gid, id: this.obj_key });
     this.listen(ControlEvents.GROUP_COMPLETE, (event, data) => {
       if (data.grp == this.gid) {
         this.reset();
@@ -55,14 +55,14 @@ class Rollover extends RelocatableObject {
     if (this.lit == false) {
       this.lit = true;
       this.marker.setTexture("rollover_lit");
-      this.scene.q(ControlEvents.GROUP_UPDATE, { grp: this.gid, id: this.obj_key });
+      this.scene.q(ControlEvents.GROUP_UPDATE, { side: this.parent.obj_key, grp: this.gid, id: this.obj_key });
     }
   }
 
   reset () {
     this.lit = false;
     this.marker.setTexture("rollover_dark");
-    this.scene.q(ControlEvents.GROUP_CLEAR, { grp: this.gid, id: this.obj_key });
+    this.scene.q(ControlEvents.GROUP_CLEAR, { side: this.parent.obj_key, grp: this.gid, id: this.obj_key });
   }
 
   update () {

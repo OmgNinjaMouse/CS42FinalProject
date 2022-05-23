@@ -6,13 +6,15 @@ class DialogPortrait extends BasicObject {
     this.setImage = this.setImage.bind(this);
     this.x = x;
     this.y = y;
+    this.img_key = "dialog_"+this.x+":"+Math.floor(Math.random()*50);
   }
 
   preload () {
     super.preload();
-    let key = "dialog_"+this.x;
-    console.log("Loading " + this.image_fn + " as " + key);
-    this.scene.load.image(key, this.image_fn);
+    
+    this.img_key = "dialog_"+this.x+":"+Math.floor(Math.random()*50);
+    console.log("Loading " + this.image_fn + " as " + this.img_key);
+    this.scene.load.image(this.img_key, this.image_fn);
   }
 
   create () {
@@ -20,8 +22,7 @@ class DialogPortrait extends BasicObject {
     this.rect = this.scene.add.rexRoundRectangle(0,0,128,128,12, 0x00ff00, 1);
     this.obj = this.scene.physics.add.existing(this.rect);
     this.obj.setPosition(this.x, this.y);
-    let key = "dialog_"+this.x;
-    this.portrait = this.scene.add.sprite(this.x, this.y, key);
+    this.portrait = this.scene.add.sprite(this.x, this.y, this.img_key);
     this.portrait.setDepth(2);
   }
 
@@ -117,19 +118,22 @@ class DialogCharLeft extends BasicObject {
     super.init();
     this.objects.pic.setPosition(this.pic_loc.x, this.pic_loc.y);
     this.objects.txt.setPosition(this.dialog_loc.x, this.dialog_loc.y);
+  }
 
+  preload () {
     this.portrait_fn = getModel().game_ctx.players[this.player_id].portrait;
     this.objects.pic.setImage(this.portrait_fn);
 
     let msg_idx = Math.floor(getModel().game_ctx.players[this.player_id].language.taunt.length * Math.random());
     this.msg = getModel().game_ctx.players[this.player_id].language.taunt[msg_idx];
     this.objects.txt.setMsg(this.msg.txt);
-  }
 
-  preload () {
     super.preload();
+    this.audio_key = "wav_"+this.pic_loc.x+":"+Math.floor(Math.random()*50);
+
     if (this.msg.wav != undefined) {
-      this.scene.load.audio("wav_"+this.pic_loc.x, this.msg.wav);
+      console.log("Loading sound " + this.msg.wav + " as key " + this.audio_key);
+      this.scene.load.audio(this.audio_key, this.msg.wav);
     }
   }
 
@@ -141,7 +145,7 @@ class DialogCharLeft extends BasicObject {
     this.objects.txt.play(callback);
 
     if (this.msg.wav != undefined) {
-      this.scene.sound.add("wav_"+this.pic_loc.x).play();
+      this.scene.sound.add(this.audio_key).play();
     }
   }
 }
@@ -185,6 +189,7 @@ class SceneDialog extends BasicScene {
     super.init();
     this.state = DialogStates.LOADING;
     this.start_time = Date.now();
+    
 
   }
 

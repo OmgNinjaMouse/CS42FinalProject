@@ -65,20 +65,6 @@ class PinballField extends RelocatableObject {
     this.border_size = 25;
 
 
-    this.addObject("frame_top", new FieldBorder(this, this.width/2, 0, this.width, this.border_size));
-    this.addObject("frame_btm", new FieldBorder(this, this.width/2, this.height, this.width, this.border_size));
-    this.addObject("frame_lft", new FieldBorder(this, 0, this.height/2, this.border_size, this.height));
-    this.addObject("frame_rgt", new FieldBorder(this, this.width, this.height/2, this.border_size, this.height));
-    this.addObject("group_mgr", new GroupManager(this, 0, 0));
-
-    this.objects.frame_btm.setCollisionCb((pair) => {
-      
-      let key = pair.bodyB._pinball_key;
-      if (key != undefined) {
-        console.log("Deadball " + key);
-        this.objects[key].reset();
-      }
-    });
   }
 
   getStatus () {
@@ -123,6 +109,22 @@ class PinballField extends RelocatableObject {
     this.balls = [];
     this.launchers = [];
     this.flippers = [];
+
+    console.log(this.obj_key + " field begining level init!");
+    this.objects = {};
+    this.addObject("frame_top", new FieldBorder(this, this.width/2, 0, this.width, this.border_size));
+    this.addObject("frame_btm", new FieldBorder(this, this.width/2, this.height, this.width, this.border_size));
+    this.addObject("frame_lft", new FieldBorder(this, 0, this.height/2, this.border_size, this.height));
+    this.addObject("frame_rgt", new FieldBorder(this, this.width, this.height/2, this.border_size, this.height));
+    this.addObject("group_mgr", new GroupManager(this, 0, 0));
+    this.objects.frame_btm.setCollisionCb((pair) => {
+      
+      let key = pair.bodyB._pinball_key;
+      if (key != undefined) {
+        console.log("Deadball " + key);
+        this.objects[key].reset();
+      }
+    });
 
     let level_mdl = getModel().game_ctx.level;
     if (Object.keys(level_mdl).length == 0) {

@@ -5,6 +5,8 @@ class Nameplate extends RelocatableObject {
     this.justify = this.justify.bind(this);
     this.setName = this.setName.bind(this);
     this.name = "";
+    this.is_right = false;
+
   }
 
   create () {
@@ -20,7 +22,12 @@ class Nameplate extends RelocatableObject {
   }
 
   justify(is_right) {
-    if (is_right) {
+    this.is_right = is_right;
+  }
+
+  update () {
+    super.update();
+    if (this.is_right) {
       this.text.setOrigin(1,0);
     } else {
       this.text.setOrigin(0,0);

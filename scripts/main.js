@@ -52,7 +52,7 @@ const init_model = {
         language: {}
       }
     ],
-    level_fn: "characters/princess/pinball.json",
+    level_fn: "characters/banditrob/pinball.json",
     level: { }
   },
   history: []
