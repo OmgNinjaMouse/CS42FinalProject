@@ -213,7 +213,7 @@ class SceneGameV2 extends BasicScene {
       }
     })
 
-    this.objects.stage.setHealth(getModel().game_ctx.players[0].health, getModel().game_ctx.players[0].health);
+    this.objects.stage.setHealth(getModel().game_ctx.players[0].health, getModel().game_ctx.players[1].health);
     this.objects.left_health.setHealth(getModel().game_ctx.players[0].health);
     this.objects.right_health.setHealth(getModel().game_ctx.players[1].health);
   }

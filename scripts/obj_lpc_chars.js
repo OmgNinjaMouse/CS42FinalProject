@@ -57,6 +57,7 @@ class SpriteBasic extends RelocatableObject {
   update () {
     super.update();
     if (this.ani != this.last_ani) {
+      console.log(this.ani);
       this.last_ani = this.ani;
 
       if (this.ani.length > 0) {
@@ -150,6 +151,6 @@ class LpcSprite extends SpriteBasic {
   }
 
   playAni(ani) {
-    this.ani = ani + this.key;
+    this.ani = ani + "_" + this.key;
   }
 }
