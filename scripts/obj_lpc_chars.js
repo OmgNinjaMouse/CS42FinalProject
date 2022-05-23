@@ -148,4 +148,8 @@ class LpcSprite extends SpriteBasic {
 
     this.ani = 'lpc_walk_down' + "_" + this.key;
   }
+
+  playAni(ani) {
+    this.ani = ani + this.key;
+  }
 }

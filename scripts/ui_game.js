@@ -31,6 +31,9 @@ class CharacterStage extends RelocatableObject {
   }
 
   update () {
+    super.update();
+    this.objects.left_char.playAni('lpc_walk_down');
+    this.objects.right_char.playAni('lpc_walk_down');
     /* Every 1 sec, perform a DPS check */
     /* Pick animation based on DPS */
     /*    weak */
