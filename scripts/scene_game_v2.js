@@ -83,6 +83,7 @@ class SceneGameV2 extends BasicScene {
     let field_width = 300;
     let field_height = 400;
 
+    this.addObject("bgimg", new BackgroundImage(this, 0, 0, "game_bg", "images/forest_fight.jpeg"))
     this.addObject("left_field", new PinballField(this, side_margin, top_margin, field_width, field_height));
     this.addObject("right_field", new PinballField(this, screen_width-field_width-side_margin, top_margin, field_width, field_height));
     this.addObject("clock", new GameClock(this, screen_width/2, top_margin/2));

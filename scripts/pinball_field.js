@@ -17,6 +17,7 @@ class FieldBorder extends RelocatableObject {
   create () {
     super.create();
     let loc = this.getLoc();
+
     this.rail_mdl = this.scene.add.rectangle(loc.x, loc.y, this.border_width, this.border_height, 0xaa0000);
     this.scene.add.existing(this.rail_mdl);
     this.rail_obj = this.scene.matter.add.gameObject(this.rail_mdl);
@@ -112,6 +113,14 @@ class PinballField extends RelocatableObject {
 
     console.log(this.obj_key + " field begining level init!");
     this.objects = {};
+    
+    let loc = this.getLoc();
+    this.bg_rect = this.scene.add.rectangle(loc.x, loc.y, this.width, this.height, 0x000000);
+    this.scene.add.existing(this.bg_rect);
+    this.bg_obj = this.scene.matter.add.gameObject(this.bg_rect).setStatic(true).setSensor(true);
+    this.bg_obj.setOrigin(0).setAlpha(0.6);
+
+
     this.addObject("frame_top", new FieldBorder(this, this.width/2, 0, this.width, this.border_size));
     this.addObject("frame_btm", new FieldBorder(this, this.width/2, this.height, this.width, this.border_size));
     this.addObject("frame_lft", new FieldBorder(this, 0, this.height/2, this.border_size, this.height));

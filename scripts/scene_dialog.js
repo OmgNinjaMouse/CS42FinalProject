@@ -180,6 +180,7 @@ class SceneDialog extends BasicScene {
     super("SceneDialog");
     this.fsm = this.fsm.bind(this);
 
+    this.addObject("bgimg", new BackgroundImage(this, 0, 0, "dialog_bg", "images/forest_bg.jpeg"))
     this.addObject("left", new DialogCharLeft(this));
     this.addObject("right", new DialogCharRight(this));
     this.addObject("bgm", new BgmAgent(this));

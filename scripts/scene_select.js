@@ -319,12 +319,14 @@ const SelectEvents = {
   DISPLAY_DONE: 2
 }
 
+
 class SceneSelect extends BasicScene {
   constructor () {
     super("SceneSelect");
     this.choiceMade = this.choiceMade.bind(this);
     this.fsm = this.fsm.bind(this);
 
+    this.addObject("bgimg", new BackgroundImage(this, 0, 0, "select_bg", "images/world_map.png"))
     this.addObject("title", new MainTitle(this, 960/2, 50, "Player Select"))
     this.addObject("subtitle", new SubTitle(this, 960/2, 200, "VS"))
     this.addObject("gallery", new SelectGallery(this));

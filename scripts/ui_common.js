@@ -99,3 +99,31 @@ class MenuButton extends BasicObject {
     super.update();
   }
 }
+
+
+class BackgroundImage extends RelocatableObject {
+  constructor (parent, x, y, key, image_fn) {
+    super(parent, x, y);
+    this.key = key;
+    this.image_fn = image_fn;
+  }
+
+  preload () {
+    super.preload();
+    this.scene.load.image(this.key, this.image_fn);
+  }
+
+  create () {
+    super.create();
+    this.obj = this.scene.add.sprite(0,0,this.key);
+    this.obj.displayWidth = 960;
+    this.obj.displayHeight = 540;
+    this.obj.setOrigin(0);
+    this.obj.setAlpha(0.5);
+    this.obj.setDepth(-1);
+  }
+
+  update () {
+    super.update();
+  }
+}
