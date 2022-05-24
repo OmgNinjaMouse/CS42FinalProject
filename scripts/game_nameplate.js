@@ -34,3 +34,30 @@ class Nameplate extends RelocatableObject {
     }
   }
 }
+
+class TextCombat extends RelocatableObject {
+  constructor (parent, x, y) {
+    super(parent, x, y);
+    this.setMessage = this.setMessage.bind(this);
+    this.name = "";
+    this.is_right = false;
+
+  }
+
+  create () {
+    super.create();
+    let loc = this.getLoc();
+    this.text = this.scene.add.text(loc.x, loc.y, "--", { fontFamily: 'combat', fontSize:'18px'});
+    this.text.setOrigin(0,0);
+  }
+
+  setMessage(name) {
+    this.name = name;
+    this.text.setText(this.name);
+  }
+
+  update () {
+    super.update();
+    this.text.setOrigin(0.5,0);
+  }
+}

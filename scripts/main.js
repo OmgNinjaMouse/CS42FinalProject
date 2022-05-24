@@ -19,7 +19,8 @@ const init_model = {
       SceneDialog,
       SceneGameV2,
       SceneContinue,
-      SceneTest
+      SceneTest,
+      SceneAbout
     ],
     parent: "dom_id"    
   },

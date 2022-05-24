@@ -3,6 +3,7 @@ class SceneTitle extends BasicScene {
   constructor() {
     super("SceneTitle");
     this.doOptions = this.doOptions.bind(this);
+    this.doAbout = this.doAbout.bind(this);
     this.startGame = this.startGame.bind(this);
   }
 
@@ -19,7 +20,7 @@ class SceneTitle extends BasicScene {
     let btn_space = 85;
     this.addObject("play_btn", new MenuButton(this, bx, by, "Play", this.startGame));
     this.addObject("options_btn", new MenuButton(this, bx, by+(btn_space), "Options", this.doOptions));
-    this.addObject("credits_btn", new MenuButton(this, bx, by+(btn_space*2), "About"));
+    this.addObject("credits_btn", new MenuButton(this, bx, by+(btn_space*2), "About", this.doAbout));
   }
 
   preload () {
@@ -76,5 +77,10 @@ class SceneTitle extends BasicScene {
   doOptions () {
     console.log("here");
     this.scene.start("SceneOptions");
+  }
+
+  doAbout () {
+    console.log("about");
+    this.scene.start("SceneAbout");
   }
 }
