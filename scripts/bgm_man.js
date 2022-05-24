@@ -86,6 +86,11 @@ class BgmManager {
           this.sound_sprites[song].play();
         }
       });
+
+      this.volume = getModel().options.bgm_volume;
+      Object.keys(this.sound_sprites)
+        .map( (key) => this.sound_sprites[key])
+        .forEach( (sprite) => sprite.setVolume(this.volume));
     }
   }
 
