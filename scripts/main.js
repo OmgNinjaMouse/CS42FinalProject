@@ -25,6 +25,7 @@ const init_model = {
     parent: "dom_id"    
   },
   options: {
+    ml_enable: true,
     bgm_volume: 0.5,
     bgm_enable: true,
     sfx_volume: 0.5,
@@ -71,6 +72,11 @@ class Model {
     });
 
     this.bgm = new BgmManager();
+    this.brain = new Brain(this.history);
+    this.brain.init();
+    if (this.options.ml_enable) {
+      this.brain.load();
+    }
   }
 
   setDomId (dom_id) {

@@ -35,8 +35,7 @@ class SceneTitle extends BasicScene {
     this.input.keyboard.on('keydown', (event) => {
       switch (event.code) {
           case "Backslash":
-            
-
+            /* Skip to Gameplay for Debug  */
             this.load.json("field", getModel().game_ctx.level_fn);
             this.load.json("p1_lang", getModel().game_ctx.players[0].language_fn);
             this.load.json("p2_lang", getModel().game_ctx.players[1].language_fn);
@@ -52,8 +51,42 @@ class SceneTitle extends BasicScene {
             
             break;
           case "Delete":
+            /* Hidden Test Scene for physics sandbox */
             this.scene.start("SceneTest");
             break;
+          case 'KeyL':
+              /* Utility for loading a game history file */
+              this.load.json('seed', "model/seed.json");
+              this.load.once(Phaser.Loader.Events.COMPLETE, () => {
+                this.game.model.history = this.cache.json.get('seed');
+                console.log("Seeded History loaded.");
+              });
+              this.load.start();
+              break;
+          case 'KeyI':
+              getModel().brain.load();
+              break;
+          case 'KeyK':
+              getModel().brain.loadData();
+              break;
+          case 'KeyO':
+              getModel().brain.setHistory(this.game.model.history);
+              getModel().brain.train();
+              break;
+          case 'KeyP':
+              getModel().brain.saveModel();
+              break;
+          case "Semicolon":
+              getModel().brain.saveData();
+              break;
+          case "KeyQ":
+              /* Utility for saving a game history file */
+              var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(getModel().history));
+              var dlAnchorElem = document.getElementById('downloadAnchorElem');
+              dlAnchorElem.setAttribute("href",     dataStr     );
+              dlAnchorElem.setAttribute("download", "scene.json");
+              dlAnchorElem.click();
+              break;
           default:
             console.log(event.code);
             break;

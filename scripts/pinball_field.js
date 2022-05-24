@@ -64,28 +64,60 @@ class PinballField extends RelocatableObject {
     this.width = width;
     this.height = height;
     this.border_size = 25;
+  }
 
+  getAction (event_reg) {
+    let action_str = "None";
+    if (event_reg == 0) {
+      action_str = "None";
+    }
 
+    else if (event_reg & (1<<ControlEvents.LAUNCH_RELEASE)) {
+      action_str = "user_release";
+    }
+
+    else if (event_reg & (1<<ControlEvents.LAUNCH_PULL)) {
+      action_str = "user_pull";
+    }
+
+    else if (event_reg & (1<<ControlEvents.LEFT_FLIP_UP)) {
+      action_str = "user_left_flip_up";
+    }
+
+    else if (event_reg & (1<<ControlEvents.RIGHT_FLIP_UP)) {
+      action_str = "user_right_flip_up";
+    }
+    else if (event_reg & (1<<ControlEvents.LEFT_FLIP_DN)) {
+      action_str = "user_left_flip_dn";
+    }
+
+    else if (event_reg & (1<<ControlEvents.RIGHT_FLIP_DN)) {
+      action_str = "user_right_flip_dn";
+    }
+
+    else if (event_reg & (1<<ControlEvents.LEFT_TILT)) {
+      action_str = "user_left_tilt";
+    }
+
+    else if (event_reg & (1<<ControlEvents.RIGHT_TILT)) {
+      action_str = "user_right_tilt";
+    }
+    return action_str;
   }
 
   getStatus () {
+    let action_str = this.getAction(this.event_reg);
+
     let log = {
-      ball_x: round2(this.balls[0].getPosition().x),
-      ball_y: round2(this.balls[0].getPosition().y),
+      ball_x: round2(this.balls[0].getPosition().x - this.x),
+      ball_y: round2(this.balls[0].getPosition().y - this.y),
       ball_vx: round2(this.balls[0].getVelocity().x),
       ball_vy: round2(this.balls[0].getVelocity().y),
       spring_y: round2(this.launchers[0].getPosition()),
       flip_left: round2(this.flippers[0].getPosition()),
       flip_right: round2(this.flippers[1].getPosition()),
       events: this.event_reg,
-      user_left_flip_up: this.event_reg & (1<<ControlEvents.LEFT_FLIP_UP),
-      user_right_flip_up: this.event_reg & (1<<ControlEvents.RIGHT_FLIP_UP),
-      user_left_flip_dn: this.event_reg & (1<<ControlEvents.LEFT_FLIP_DN),
-      user_right_flip_dn: this.event_reg & (1<<ControlEvents.RIGHT_FLIP_DN),
-      user_pull: this.event_reg & (1<<ControlEvents.LAUNCH_PULL),
-      user_release: this.event_reg & (1<<ControlEvents.LAUNCH_RELEASE),
-      user_left_tilt: this.event_reg & (1<<ControlEvents.LEFT_TILT),
-      user_right_tilt: this.event_reg & (1<<ControlEvents.RIGHT_TILT),
+      action: action_str
     }
     this.event_reg = 0x0;
     return log;

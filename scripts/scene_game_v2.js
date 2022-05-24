@@ -71,6 +71,8 @@ class SceneGameV2 extends BasicScene {
 
     });
     this.dispatch = this.dispatch.bind(this);
+    this.doAi = this.doAi.bind(this);
+    this.doMl = this.doMl.bind(this);
 
     this.addObject("bgm", new BgmAgent(this));
 
@@ -136,6 +138,8 @@ class SceneGameV2 extends BasicScene {
 
     this.last_status = Date.now();
     this.status_delay = 200;
+
+    //getModel().history = [];
   }
 
   dispatch (uiEvent, data) {
@@ -184,8 +188,72 @@ class SceneGameV2 extends BasicScene {
     });
     this.round_sfx.play({ volume: getModel().options.sfx_volume*4 });
 
-    getModel().history = [];
+  }
 
+  doAi () {
+    let ai_event = -1;
+
+    /* Check if the ball is in the launcher.  If the ball is there, 
+     * pull back if needed, then release
+     */ 
+    let ai_status = this.objects.right_field.getStatus();
+    if ((ai_status.ball_x > 310) && (ai_status.ball_y > 350)) {
+      if (ai_status.spring_y > 30) {
+        ai_event = ControlEvents.LAUNCH_PULL; 
+      } else {
+        ai_event = ControlEvents.LAUNCH_RELEASE; 
+      }
+    }
+
+    if (ai_event >= 0) {
+      this.objects["right_field"].dispatch(ai_event, {});
+    }
+  }
+
+  doMl () {
+
+    /* AI events */
+    let ai_status = this.objects.right_field.getStatus();
+    getModel().brain.predict(ai_status, (prediction) => {
+      //console.log(prediciton);
+      if (prediction == undefined) {
+        return;
+      }
+      /* For each possible action, roll dice against confidence level that we should do it */
+      /* If random < confidence, go for it.  Dispatch to right field.  */
+      let salt = Math.random();
+      let ai_index = -1;
+      while ((salt > 0) && (ai_index < prediction.length)) {
+        ai_index++;
+        salt -= prediction[ai_index].confidence;
+      }
+
+      if (ai_index < prediction.length) {
+        let label = prediction[ai_index].label;
+        let ai_event = -1;
+        switch (label) {
+          default:
+          case "None":
+            break;
+          case "user_left_flip_up":   ai_event = ControlEvents.LEFT_FLIP_UP;  break;
+          case "user_right_flip_up":  ai_event = ControlEvents.RIGHT_FLIP_UP; break;
+          case "user_left_flip_dn":   ai_event = ControlEvents.LEFT_FLIP_DN; break;
+          case "user_right_flip_dn":  ai_event = ControlEvents.RIGHT_FLIP_DN; break;
+          case "user_pull": 
+            ai_event = ControlEvents.LAUNCH_PULL; 
+            break;
+          case "user_release":        
+            ai_event = ControlEvents.LAUNCH_RELEASE; 
+            break;
+          case "user_left_tilt":      ai_event = ControlEvents.LEFT_TILT; break;
+          case "user_right_tilt":     ai_event = ControlEvents.RIGHT_TILT; break;
+        }
+        if (ai_event >= 0) {
+          //console.log("Right dispatch: " + action.label + " evt:" + ai_event);
+          this.objects["right_field"].dispatch(ai_event, {});
+        }
+      }
+    })
   }
 
   update () {
@@ -201,7 +269,17 @@ class SceneGameV2 extends BasicScene {
 
     if (this.last_time > (this.last_status + this.status_delay)) {
       this.last_status = this.last_time;
-      getModel().history.push(this.objects.left_field.getStatus());
+      let status = this.objects.left_field.getStatus();
+      //if (status.events > 0) {
+        //console.log(status.action);
+        getModel().history.push(status);
+      //}
+    }
+
+    if (getModel().options.ml_enable) {
+      this.doMl();
+    } else {
+      this.doAi();
     }
 
     getModel().game_ctx.players.forEach( (player, idx) => {

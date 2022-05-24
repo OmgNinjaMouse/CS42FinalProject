@@ -69,6 +69,10 @@ class SceneContinue extends BasicScene {
             switch (event.code) {
                 case "Space":
                     this.scene.start("SceneGameV2");
+                    //getModel().brain.setHistory(this.game.model.history);
+                    //getModel().brain.train(() => {
+                    //    this.scene.start("SceneGameV2");
+                    //});
                     break;
                 default:
                     if (this.pressed == false) {
