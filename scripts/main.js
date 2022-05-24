@@ -32,6 +32,7 @@ const init_model = {
   game_ctx: {
     time_remaining: 0,
     max_health: 200,
+    preselects: [  -1, -1 ],
     players: [
       {
         name: "Princess",
@@ -51,6 +52,9 @@ const init_model = {
         language_fn: "./characters/badwolf/language.json",
         language: {}
       }
+    ],
+    characters: [
+
     ],
     level_fn: "characters/banditrob/pinball.json",
     level: { }

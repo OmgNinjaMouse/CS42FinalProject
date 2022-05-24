@@ -16,6 +16,49 @@ const PortraitEvents = {
   TIMEOUT: 3
 }
 
+class SelectSprite extends RelocatableObject {
+  constructor (parent, x, y, index) {
+    super(parent, x, y);
+    this.preselect_idx = index;
+    this.side = (index == 0) ? "left_" : "right_";
+  }
+
+  init () {
+
+    console.log("SelectSprite Init");
+    console.log(getModel().game_ctx.characters);
+    this.sprites = [];
+    getModel().game_ctx.characters.forEach( (char, idx) => {
+      console.log("Building select sprite " + char.key + " sheet:" + char.sprites);
+      this.sprites.push(this.addObject(char.key, new LpcSprite(this, char.key, char.sprites, 0, 0)));  
+    })
+    this.active_sprite = -1;
+
+    super.init();
+  }
+
+  preload () {
+    super.preload();
+  }
+
+  create () {
+    super.create();
+  }
+
+  update () {
+    super.update();
+
+    this.active_sprite = getModel().game_ctx.preselects[this.preselect_idx];
+    this.sprites.forEach( (sprite, idx) => {
+      if (idx == this.active_sprite) {
+        sprite.setVisible(true);
+      } else {
+        sprite.setVisible(false);
+      }
+    })
+  }
+}
+
 class SelectPortrait extends BasicObject {
   constructor (parent, id, x, y) {
     super(parent);
@@ -143,6 +186,16 @@ class SelectPortrait extends BasicObject {
     if (this.rect) {
       this.rect.setFillStyle(color);
     }
+
+    if (this.state == PortraitStates.SELECTED) {
+      if (this.preselect_cb != undefined) {
+        this.preselect_cb(this.id);
+      }
+    }
+  }
+
+  setPreselectCb(callback) {
+    this.preselect_cb = callback;
   }
 
   setLockedCb (callback) {
@@ -178,13 +231,26 @@ class SelectGallery extends BasicObject {
       let x = center_x + (this.sprite_width * (col - 2));
       let y = start_y + (this.sprite_width * row);
 
-      this.addObject("char_" + i, new SelectPortrait(this, i, x, y));
+      this.addObject("char_" + i, new SelectPortrait(this, i, x, y))
+        .setPreselectCb((id) => {
+          switch(parent.state) {
+            case SelectStates.PLAYER_ONE_WAITING:
+              getModel().game_ctx.preselects[0] = id;
+              break;
+            case SelectStates.PLAYER_TWO_WAITING:
+              getModel().game_ctx.preselects[1] = id;
+              break;
+            case SelectStates.DISPLAY:
+              break;
+          }
+        });
     }
   }
 
   init () {
     super.init();
     this.randomize = false;
+
   }
 
   setLockedCb (callback) {
@@ -263,8 +329,11 @@ class SceneSelect extends BasicScene {
     this.addObject("subtitle", new SubTitle(this, 960/2, 200, "VS"))
     this.addObject("gallery", new SelectGallery(this));
     this.addObject("bgm",       new BgmAgent(this));
-    this.addObject("left_name", new Nameplate(this, 200,500));
-    this.addObject("right_name", new Nameplate(this, 760,500)).justify(true);
+    this.addObject("left_name", new Nameplate(this, 160,350));
+    this.addObject("right_name", new Nameplate(this, 800,350)).justify(true);
+    this.addObject("sprite_left", new SelectSprite(this, 200, 200, 0));
+    this.addObject("sprite_right", new SelectSprite(this, 760, 200, 1));
+
   }
 
   init () {
@@ -289,9 +358,12 @@ class SceneSelect extends BasicScene {
 
     this.characters = this.cache.json.get('character_data');
     console.log(this.characters);
+    getModel().game_ctx.characters = this.characters.characters;
     this.characters.characters.forEach( (character, idx) => {
       this.objects.gallery.setPortrait(idx, character.portrait);
     })
+
+    getModel().game_ctx.preselects = [ -1, -1];
   }
 
   fsm (event, character_id) {
@@ -303,6 +375,7 @@ class SceneSelect extends BasicScene {
             console.log("Player One has chosen: " + character_id);
             this.state = SelectStates.PLAYER_TWO_WAITING;
             this.player_one = character_id;
+            getModel().game_ctx.preselects[0] = character_id;
             this.objects.left_name.setName(this.characters.characters[this.player_one].name);
             this.objects.gallery.selectRandom();
             break;
@@ -313,6 +386,7 @@ class SceneSelect extends BasicScene {
           case SelectEvents.SELECTION_MADE:
             console.log("Player Two has chosen: " + character_id);
             this.player_two = character_id;
+            getModel().game_ctx.preselects[1] = character_id;
             this.objects.right_name.setName(this.characters.characters[this.player_two].name);
 
             this.state = SelectStates.DISPLAY;

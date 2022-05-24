@@ -24,6 +24,7 @@ class SceneTitle extends BasicScene {
 
   preload () {
     super.preload();
+    this.load.json('character_data', 'characters/characters.json');
   }
 
   create () {
@@ -56,7 +57,11 @@ class SceneTitle extends BasicScene {
             console.log(event.code);
             break;
       }
-  });
+    });
+
+
+    this.characters = this.cache.json.get('character_data');
+    getModel().game_ctx.characters = this.characters.characters;
   }
 
   update () {

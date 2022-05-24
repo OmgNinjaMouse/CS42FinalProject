@@ -75,6 +75,10 @@ class SpriteBasic extends RelocatableObject {
       this.obj.setPosition(loc.x, loc.y);
     }
   }
+
+  setVisible (is_visible) {
+    this.obj.setVisible(is_visible);
+  }
 }
 
 /* LpcSprite - Assuming a spritesheet compliant to
