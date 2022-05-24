@@ -82,7 +82,7 @@ class BumpTargetLeft extends RelocatableObject {
 
   ignite () {
     this.target_obj.setTexture("target_lit");
-    this.sfx[Math.floor(Math.random() * this.sfx.length)].play();
+    this.sfx[Math.floor(Math.random() * this.sfx.length)].play({ volume: getModel().options.sfx_volume });
     this.notify({type: "score", source:"target"});
 
     this.last_bump = Date.now();

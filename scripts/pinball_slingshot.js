@@ -105,7 +105,7 @@ class SlingshotLeft extends RelocatableObject {
     this.scene.matter.world.removeConstraint(this.resetPin);
     this.debounce = true;
     this.last_bump = Date.now();
-    this.sfx[Math.floor(Math.random() * this.sfx.length)].play();
+    this.sfx[Math.floor(Math.random() * this.sfx.length)].play({ volume: getModel().options.sfx_volume });
     this.notify({type: "score", source: "slingshot"})
   }
 

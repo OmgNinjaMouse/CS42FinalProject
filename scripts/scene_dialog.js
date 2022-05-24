@@ -145,7 +145,7 @@ class DialogCharLeft extends BasicObject {
     this.objects.txt.play(callback);
 
     if (this.msg.wav != undefined) {
-      this.scene.sound.add(this.audio_key).play();
+      this.scene.sound.add(this.audio_key).play({ volume: getModel().options.sfx_volume*4 });
     }
   }
 }

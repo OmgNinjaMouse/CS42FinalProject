@@ -49,7 +49,7 @@ class Rollover extends RelocatableObject {
   }
 
   ignite () {
-    this.sfx[Math.floor(Math.random() * this.sfx.length)].play();
+    this.sfx[Math.floor(Math.random() * this.sfx.length)].play({ volume: getModel().options.sfx_volume });
     this.notify({type: "score", source: "rollover"})
 
     if (this.lit == false) {

@@ -32,7 +32,7 @@ class GroupManager extends RelocatableObject {
         console.log(this.side + " Group " + data.grp + " completed!");
         setTimeout(() => {
             this.scene.q(ControlEvents.GROUP_COMPLETE, { side: this.parent.obj_key, grp: data.grp });
-            this.sfx[Math.floor(Math.random() * this.sfx.length)].play();
+            this.sfx[Math.floor(Math.random() * this.sfx.length)].play({ volume: getModel().options.sfx_volume });
             this.notify({type: "score", source: data.grp})
         }, 200);
       }
@@ -176,13 +176,13 @@ class SceneGameV2 extends BasicScene {
     this.round_sfx = this.sound.add("round_one");
     this.fight_sfx = this.sound.add("fight");
 
-    this.round_sfx.once("complete", () => this.fight_sfx.play());
+    this.round_sfx.once("complete", () => this.fight_sfx.play({ volume: getModel().options.sfx_volume*4 }));
     this.fight_sfx.once("complete", () => {
       this.game_start = true
       this.objects["left_field"].start();
       this.objects["right_field"].start();
     });
-    this.round_sfx.play();
+    this.round_sfx.play({ volume: getModel().options.sfx_volume*4 });
 
     getModel().history = [];
 

@@ -12,6 +12,10 @@ class BgmSlider extends BasicObject {
     this.button_image = 'sprites/music.png';
   }
 
+  setValue(volume) {
+    this.bgm_volume = volume;
+  }
+
   preload () {
     super.preload();
     this.scene.load.spritesheet(this.type + '_bgm', this.button_image,
@@ -91,8 +95,8 @@ class SceneOptions extends BasicScene {
     let bx = getModel().config.width / 2;
     let by = getModel().config.height * 0.50;
     let btn_space = 85;
-    this.addObject("bgm_volume", new BgmSlider(this, bx, by, this.updateBgm));
-    this.addObject("sfx_volume", new SfxSlider(this, bx, by+btn_space, this.updateSfx));
+    this.addObject("bgm_volume", new BgmSlider(this, bx, by, this.updateBgm)).setValue(getModel().options.bgm_volume);
+    this.addObject("sfx_volume", new SfxSlider(this, bx, by+btn_space, this.updateSfx)).setValue(getModel().options.sfx_volume);
 
     this.addObject("menu_btn", new MenuButton(this, bx, by+(btn_space*2), "Menu", this.doMenu));
   }
