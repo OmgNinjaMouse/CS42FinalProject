@@ -25,7 +25,8 @@ const init_model = {
     parent: "dom_id"    
   },
   options: {
-    developer_mode: false,
+    developer_mode: true,
+    auto_learn: false,
     ml_enable: true,
     bgm_volume: 0.5,
     bgm_enable: true,
@@ -62,7 +63,8 @@ const init_model = {
     level_fn: "characters/banditrob/pinball.json",
     level: { }
   },
-  history: []
+  history: [],
+  history_b: []
 }
 
 class Model {

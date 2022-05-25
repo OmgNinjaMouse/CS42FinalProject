@@ -12,6 +12,7 @@ class Brain {
         this.saveModel = this.saveModel.bind(this);
         this.saveData = this.saveData.bind(this);
         this.loadData = this.loadData.bind(this);
+        this.filter = this.filter.bind(this);
 
         this.entry_size = 7;
         this.history = history_log;
@@ -65,6 +66,33 @@ class Brain {
         this.history = history_log;
     }
 
+    filter (input_data, output_data) {
+        /* Return false if the suggested output matches a banned pattern */
+
+        /* Special case for in the launch queue */
+        if ((input_data.ball_x > 260) &&
+            (input_data.ball_y > 330)) {
+           switch (output_data.action) {
+              case "user_pull":
+                return (input_data.spring_y < 40);
+                break;
+              case "user_release":
+                return (input_data.spring_y > 40);
+                break;
+              default:
+                return false;     
+            }
+        } else {
+            switch (output_data.action) {
+                case "user_pull":
+                case "user_release":
+                  return false;
+                default:  break
+              }
+        }
+
+        return true;
+    }
 
     train (callback) {
         let stats = {};
@@ -94,7 +122,10 @@ class Brain {
                 let output_data = {
                     "action": this.history[h_index+1].action
                 }
-                this.ml_model.addData(input_data, output_data);
+
+                if (this.filter(input_data, output_data)) {
+                    this.ml_model.addData(input_data, output_data);
+                }
 
                 //console.log(log_entry);
 

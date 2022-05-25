@@ -49,7 +49,7 @@ class FlipperV2 extends RelocatableObject {
     this.scene.tweens.add({
       targets: [this.tweener],
       x: isDown ? this.max : this.min,
-      duration: 75,
+      duration: 65,
       onUpdateScope: this,
       onUpdate: () => {
         this.lever.setPosition(

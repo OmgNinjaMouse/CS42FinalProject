@@ -68,6 +68,7 @@ class SceneContinue extends BasicScene {
         super.init();
         this.countdown = 10000;
         this.pressed = false; 
+        this.is_learning = false;
     }
 
     create () {
@@ -84,6 +85,11 @@ class SceneContinue extends BasicScene {
                     //getModel().brain.train(() => {
                     //    this.scene.start("SceneGameV2");
                     //});
+                    break;
+                case "KeyQ":
+                    if (getModel().options.auto_learn) {
+                        this.scene.start("SceneTitle");
+                    }
                     break;
                 default:
                     if (this.pressed == false) {
@@ -126,7 +132,33 @@ class SceneContinue extends BasicScene {
         getModel().game_ctx.time_remaining = this.countdown;
 
         if (this.countdown < 0) {
-            this.scene.start("SceneTitle");
+            if (this.is_learning) {
+                /* nop */
+            }
+            else if (getModel().options.auto_learn) {
+                this.is_learning = true;
+                setTimeout( () => {
+                    if (player_health > ai_health) {
+                        getModel().brain.setHistory(this.game.model.history);
+                        getModel().brain.train(() => {
+                            this.game.model.history = [];
+                            this.game.model.history_b = [];
+                            this.is_learning = false;
+                            this.scene.start("SceneGameV2");
+                        });
+                    } else {
+                        getModel().brain.setHistory(this.game.model.history_b);
+                        getModel().brain.train(() => {
+                            this.game.model.history = [];
+                            this.game.model.history_b = [];
+                            this.is_learning = false;
+                            this.scene.start("SceneGameV2");
+                        });
+                    }    
+                }, 0)
+            } else {
+                this.scene.start("SceneTitle");
+            }
         }
 
     }

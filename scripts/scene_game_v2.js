@@ -138,7 +138,7 @@ class SceneGameV2 extends BasicScene {
 
     this.last_status = Date.now();
     this.status_delay = 200;
-
+    this.ai_clock = 0;
     //getModel().history = [];
   }
 
@@ -210,10 +210,9 @@ class SceneGameV2 extends BasicScene {
     }
   }
 
-  doMl () {
+  doMl (ai_status, output_cb) {
 
     /* AI events */
-    let ai_status = this.objects.right_field.getStatus();
     getModel().brain.predict(ai_status, (prediction) => {
       //console.log(prediciton);
       if (prediction == undefined) {
@@ -250,7 +249,7 @@ class SceneGameV2 extends BasicScene {
         }
         if (ai_event >= 0) {
           //console.log("Right dispatch: " + action.label + " evt:" + ai_event);
-          this.objects["right_field"].dispatch(ai_event, {});
+          output_cb(ai_event);
         }
       }
     })
@@ -270,16 +269,29 @@ class SceneGameV2 extends BasicScene {
     if (this.last_time > (this.last_status + this.status_delay)) {
       this.last_status = this.last_time;
       let status = this.objects.left_field.getStatus();
-      //if (status.events > 0) {
-        //console.log(status.action);
-        getModel().history.push(status);
-      //}
+      getModel().history.push(status);
+
+      let status_b = this.objects.right_field.getStatus();
+      getModel().history_b.push(status_b);
     }
 
-    if (getModel().options.ml_enable) {
-      this.doMl();
-    } else {
-      this.doAi();
+    this.ai_clock -= this.delta_ms;
+    if (this.ai_clock < 0) {
+      this.ai_clock = 200;
+
+      if (getModel().options.auto_learn) {
+        this.doMl(this.objects.left_field.getStatus(), (ui_event) => {
+          this.objects["left_field"].dispatch(ui_event, {});
+        });      
+      }
+  
+      if (getModel().options.ml_enable) {
+        this.doMl(this.objects.right_field.getStatus(), (ui_event) => {
+          this.objects["right_field"].dispatch(ui_event, {});
+        });
+      } else {
+        this.doAi();
+      }  
     }
 
     getModel().game_ctx.players.forEach( (player, idx) => {
