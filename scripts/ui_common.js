@@ -2,6 +2,8 @@
 class MainTitle extends BasicObject {
   constructor(parent, x, y, msg) {
     super(parent);
+    this.setMsg = this.setMsg.bind(this);
+
     this.x = x;
     this.y = y;
     this.msg = msg;
@@ -21,11 +23,22 @@ class MainTitle extends BasicObject {
     this.titleFront.setTint(0x116633);
     this.titleFront.setDepth(2);
   }
+
+  setMsg (msg) {
+    this.msg = msg;
+  }
+
+  update () {
+    super.update();
+    this.titleBack.setText(this.msg);
+    this.titleFront.setText(this.msg);
+  }
 }
 
 class SubTitle extends BasicObject {
   constructor (scene, x, y, msg) {
     super(scene);
+    this.setMsg = this.setMsg.bind(this);
     this.x = x;
     this.y = y;
     this.msg = msg;
@@ -36,7 +49,7 @@ class SubTitle extends BasicObject {
     let x = this.x;
     let y = this.y;
 
-    this.titleBack = this.scene.add.text(x, y, this.msg, { fontFamily: 'pinball', fontSize: '72px', fontStyle: 'bold'});
+    this.titleBack = this.scene.add.text(x, y, this.msg, { fontFamily: 'pinball', fontSize: '76px', fontStyle: 'bold'});
     this.titleBack.setOrigin(0.5);
     this.titleBack.setTint(0xaaaaff);
     this.titleBack.setBlendMode('Multiply');
@@ -47,6 +60,16 @@ class SubTitle extends BasicObject {
     this.titleFront.setOrigin(0.5);
     this.titleFront.setTint(0x3333aa);
     this.titleFront.setDepth(4);
+  }
+
+  setMsg (msg) {
+    this.msg = msg;
+  }
+
+  update () {
+    super.update();
+    this.titleBack.setText(this.msg);
+    this.titleFront.setText(this.msg);
   }
 }
 

@@ -19,6 +19,7 @@ const PortraitEvents = {
 class SelectSprite extends RelocatableObject {
   constructor (parent, x, y, index) {
     super(parent, x, y);
+    this.playAni = this.playAni.bind(this);
     this.preselect_idx = index;
     this.side = (index == 0) ? "left_" : "right_";
   }
@@ -55,6 +56,12 @@ class SelectSprite extends RelocatableObject {
       } else {
         sprite.setVisible(false);
       }
+    })
+  }
+
+  playAni (ani_name) {
+    this.sprites.forEach( (sprite, idx) => {
+      sprite.playAni(ani_name);
     })
   }
 }

@@ -25,6 +25,7 @@ const init_model = {
     parent: "dom_id"    
   },
   options: {
+    developer_mode: false,
     ml_enable: true,
     bgm_volume: 0.5,
     bgm_enable: true,
